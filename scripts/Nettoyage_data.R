@@ -4,7 +4,9 @@
 # Assumant que les données sont sauvées dans le 
 # sous-répertoire data/raw
 #-----------------------------------------------------
+#pénis
 # Extraire le nom des fichers de chaque groupe
+
 allFiles <- dir('data/raw/')
 
 # Tables à fusioner
