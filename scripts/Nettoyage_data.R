@@ -7,6 +7,9 @@
 #pénis
 # Extraire le nom des fichers de chaque groupe
 
+library(RSQLite)
+con <- dbConnect(SQLite(), dbname="reseau.db")
+
 allFiles <- dir('data/raw/')
 
 # Tables à fusioner
