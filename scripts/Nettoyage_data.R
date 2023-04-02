@@ -229,6 +229,7 @@ cour<-unique(courdata_unique1)
 cour_clean<- cour[-36, ]
 
 cour<-unique(courdata_unique1)
+#allo
 
 # Écriture de la table filtrée dans un nouveau fichier
 write.csv(cour, "clean_cour.csv", row.names = T,col.names = T)
