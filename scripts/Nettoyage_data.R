@@ -201,8 +201,8 @@ write.csv(Students, "clean_etudiant.csv", row.names = T,col.names = T)
 
 
 3.# Nettoyage table cours
-courdata_unique1$optionnel <- gsub("FALSE", "FAUX", courdata_unique1$optionnel)
-courdata_unique1$optionnel <- gsub("TRUE", "VRAI", courdata_unique1$optionnel)
+courdata_unique1$optionnel <- gsub("FAUX", "FALSE", courdata_unique1$optionnel)
+courdata_unique1$optionnel <- gsub("VRAI", "TRUE", courdata_unique1$optionnel)
 courdata_unique1 <- na.omit(courdata_unique1)
 courdata_unique1 <- data.frame(lapply(courdata_unique1, function(x) {
   gsub("BIO400", "BOT400", x)
@@ -211,19 +211,22 @@ courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "BIO109", 1, courda
 courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "BOT400", 1, courdata_unique1$credits)
 courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "ECL515", 2, courdata_unique1$credits)
 courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "TSB303", 2, courdata_unique1$credits)
-courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "BCM113", FAUX, courdata_unique1$optionnel)
-courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "BIO401", VRAI, courdata_unique1$optionnel)
-courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL215", FAUX, courdata_unique1$optionnel)
-courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL315", VRAI, courdata_unique1$optionnel) #MICROPROGRAMME
-courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL406", VRAI, courdata_unique1$optionnel) #microprogramme
-courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL522", VRAI, courdata_unique1$optionnel) 
-courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL527", FAUX, courdata_unique1$optionnel)
-courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL544", VRAI, courdata_unique1$optionnel)
-courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL610", FAUX, courdata_unique1$optionnel)
-courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL611", FAUX, courdata_unique1$optionnel)
-courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "TSB303", FAUX, courdata_unique1$optionnel)
-courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ZOO304", VRAI, courdata_unique1$optionnel)
+courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "BCM113", FALSE, courdata_unique1$optionnel)
+courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "BIO401", TRUE, courdata_unique1$optionnel)
+courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL215", FALSE, courdata_unique1$optionnel)
+courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL315", TRUE, courdata_unique1$optionnel) 
+courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL406", TRUE, courdata_unique1$optionnel) 
+courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL522", TRUE, courdata_unique1$optionnel) 
+courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL527", FALSE, courdata_unique1$optionnel)
+courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL544", TRUE, courdata_unique1$optionnel)
+courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL610", FALSE, courdata_unique1$optionnel)
+courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL611", FALSE, courdata_unique1$optionnel)
+courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "TSB303", FALSE, courdata_unique1$optionnel)
+courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ZOO304", TRUE, courdata_unique1$optionnel)
 
+
+cour<-unique(courdata_unique1)
+cour_clean<- cour[-36, ]
 
 cour<-unique(courdata_unique1)
 
