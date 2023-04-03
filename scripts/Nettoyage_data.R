@@ -20,21 +20,21 @@ nbGroupe <- length(grep(tabNames[1], allFiles))
 
 # Charger les donnees
 for(tab in tabNames) {
-  # prendre seulement les fichers de la table specifique `tab`
-  tabFiles <- allFiles[grep(tab, allFiles)]
-  
-  for(groupe in 1:nbGroupe) {
-    # Definir le nom de l'obj dans lequel sauver les donnees de la table `tab` du groupe `groupe`
-    tabName <- paste0(tab, "data", groupe)
+    # prendre seulement les fichers de la table specifique `tab`
+    tabFiles <- allFiles[grep(tab, allFiles)]
     
-    # Avant  de charger les données, il faut savoir c'est quoi le séparateur utilisé car
-    # il y a eu des données separées par "," et des autres separes par ";"
-    ficher <- paste0('data/raw/', tabFiles[groupe])
-    L <- readLines(ficher, n = 1) # charger première ligne du donnée
-    separateur <- ifelse(grepl(';', L), ';', ',') # S'il y a un ";", separateur est donc ";"
-    
-    # charger le donnée avec le bon séparateur et donner le nom `tabName`
-    assign(tabName, read.csv(ficher, sep = separateur, stringsAsFactors = FALSE))
+    for(groupe in 1:nbGroupe) {
+        # Definir le nom de l'obj dans lequel sauver les donnees de la table `tab` du groupe `groupe`
+        tabName <- paste0(tab, "data", groupe)
+        
+        # Avant  de charger les données, il faut savoir c'est quoi le séparateur utilisé car
+        # il y a eu des données separées par "," et des autres separes par ";"
+        ficher <- paste0('data/raw/', tabFiles[groupe])
+        L <- readLines(ficher, n = 1) # charger première ligne du donnée
+        separateur <- ifelse(grepl(';', L), ';', ',') # S'il y a un ";", separateur est donc ";"
+        
+        # charger le donnée avec le bon séparateur et donner le nom `tabName`
+        assign(tabName, read.csv(ficher, sep = separateur, stringsAsFactors = FALSE, na.strings=c(""," ","NA")))
     
   }
 }
@@ -73,11 +73,11 @@ collaborationdata<- rbind(collaborationdata1,collaborationdata2,collaborationdat
 etudiantdata<- rbind(etudiantdata1,etudiantdata2,etudiantdata3,etudiantdata4,etudiantdata5,etudiantdata6,etudiantdata7,etudiantdata8,etudiantdata9,etudiantdata10)
 
 #pour enlever les lignes doublons
-etudiantdata_unique<-unique(etudiantdata)
+
 courdata_unique<-unique(courdata)
 collaborationdata_unique<-unique(collaborationdata)
 
-etudiantdata_unique1<-subset(etudiantdata_unique,complete.cases(etudiantdata_unique$prenom_nom))
+
 courdata_unique1<-subset(courdata_unique,complete.cases(courdata_unique$sigle))
 collaborationdata_unique1<-subset(collaborationdata_unique,complete.cases(collaborationdata_unique$etudiant1))
 
@@ -197,10 +197,10 @@ Students[86, ] <- c("eve_dandonneau",
                     NA,
                     NA,
                     NA)
-
+pathe<- file.path("data","clean","clean_etudiant.csv")
 
 # Écriture de la table filtrée dans un nouveau fichier
-write.csv(Students, "clean_etudiant.csv", row.names = T,col.names = T)
+write.csv(Students,pathe, row.names = T,col.names = T)
 
 
 3.# Nettoyage table cours
@@ -232,10 +232,16 @@ cour<-unique(courdata_unique1)
 cour_clean<- cour[-36, ]
 
 cour<-unique(courdata_unique1)
-#allo
+
+
+pathcour<- file.path("data","clean","clean_cour.csv")
 
 # Écriture de la table filtrée dans un nouveau fichier
-write.csv(cour, "clean_cour.csv", row.names = T,col.names = T)
+write.csv(cour, pathcour, row.names = T,col.names = T)
+
+pathcoll<- file.path("data","clean","clean_collaboration.csv")
+
+write.csv(collaborationdata_unique1, pathcoll, row.names = T,col.names = T)
 
 #-----------------------------------------------------
 
