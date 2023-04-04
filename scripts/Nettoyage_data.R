@@ -148,6 +148,12 @@ collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, functi
 collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
   gsub("eve<a0>_dandonneau", "eve_dandonneau", x)
 }))
+collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+  gsub("eve<a0>_dandonneau", "eve_dandonneau", x)
+}))
+collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+  gsub("philippe_bourrassa", "philippe_bourassa", x)
+}))
 
 class(collaborationdata_unique1)
 
