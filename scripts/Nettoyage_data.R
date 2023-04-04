@@ -63,7 +63,9 @@ collaborationdata_unique<-unique(collaborationdata)
 collaborationdata_unique1<-subset(collaborationdata_unique,complete.cases(collaborationdata_unique$etudiant1))
 
 1.#Correction fautes de francais collaboration
-
+collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+  gsub(" ", "$", x)
+}))
 collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
   gsub("ariane_barette", "ariane_barrette", x)
 }))
@@ -131,7 +133,18 @@ collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, functi
 collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
   gsub("yannick_sagneau", "yanick_sageau", x)
 }))
-
+collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+  gsub("juliette_meilleur<a0>", "juliette_meilleur", x)
+}))
+collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+  gsub("mia_carriere<a0>", "mia_carriere", x)
+}))
+collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+  gsub("laurianne_plante$", "laurianne_plante", x)
+}))
+collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+  gsub("INS154$", "INS154", x)
+}))
 
 class(collaborationdata_unique1)
 
@@ -159,7 +172,7 @@ etudiantdata7 <- subset(etudiantdata7,select = c("prenom_nom","prenom","nom","re
 etudiantdata<- rbind(etudiantdata1,etudiantdata2,etudiantdata3,etudiantdata4,etudiantdata5,etudiantdata6,etudiantdata7,etudiantdata8,etudiantdata9,etudiantdata10)
 
 
-2.#Enlever les lignes qui nous interesse pas pour la table étudiant
+#Enlever les lignes qui nous interesse pas pour la table étudiant
 etudiant<-unique(etudiantdata)
 nomrow<-seq(1,227,1)
 
@@ -223,8 +236,7 @@ courdata<- rbind(courdata1,courdata2,courdata3,courdata4,courdata5,courdata6,cou
 courdata_unique<-unique(courdata)
 courdata_unique1<-subset(courdata_unique,complete.cases(courdata_unique$sigle))
 
-
-3.# Nettoyage table cours
+# Nettoyage table cours
 courdata_unique1$optionnel <- gsub("FAUX", "FALSE", courdata_unique1$optionnel)
 courdata_unique1$optionnel <- gsub("VRAI", "TRUE", courdata_unique1$optionnel)
 courdata_unique1 <- na.omit(courdata_unique1)
