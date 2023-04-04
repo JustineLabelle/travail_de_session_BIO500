@@ -148,6 +148,12 @@ collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, functi
 collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
   gsub("eve<a0>_dandonneau", "eve_dandonneau", x)
 }))
+collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+  gsub("eve<a0>_dandonneau", "eve_dandonneau", x)
+}))
+collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+  gsub("philippe_bourrassa", "philippe_bourassa", x)
+}))
 
 class(collaborationdata_unique1)
 
@@ -291,6 +297,11 @@ collaboration<-read.csv(file= pathcoll,sep = ",")
 ##Requetes SQL
 
 con <- dbConnect(SQLite(), dbname="reseau.db")
+
+dbExecute(con,"DROP TABLE etudiant;")
+dbExecute(con,"DROP TABLE collaborations;")
+dbExecute(con,"DROP TABLE cours;")
+
 dbWriteTable(con, append = TRUE, name = "etudiant", value = etudiant, row.names = FALSE)
 dbWriteTable(con, append = TRUE, name = "collaborations", value = collaboration, row.names = FALSE)
 dbWriteTable(con, append = TRUE, name = "cours", value = cour, row.names = FALSE)
