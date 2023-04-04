@@ -222,6 +222,18 @@ Students[86, ] <- c("eve_dandonneau",
                     NA,
                     NA,
                     NA)
+##Ajouter des étudiantsqui se rerouve dans le fichier collaboration et pas dans le ficheier etudiant:
+#karim_hamzaoui, eloise_bernier, naomie_morin, gabrielle_moreault,maxence_comyn,maude_viens
+
+nouvelles_lignes <- data.frame(prenom_nom = c("karim_hamzaoui", "eloise_bernier","naomie_morin", "gabrielle_moreault","maxence_comyn", "maude_viens"), 
+                               prenom=c("karim", "eloise","naomie", "gabrielle","maxence", "maude"),
+                               nom = c("hamzaoui", "bernier","morin", "moreault","comyn", "viens"),region_administrative=NA,regime_coop=NA,formation_prealable=NA,annee_debut=NA,programme=NA)
+
+
+Students <- rbind(Students, nouvelles_lignes)
+
+nomrow3<-seq(1,163,1)
+row.names(Students)<-nomrow3
 
 # Écriture de la table filtrée dans un nouveau fichier
 pathe<- file.path("data","clean","clean_etudiant.csv")
@@ -366,4 +378,19 @@ FROM collaborations
 edges<- dbGetQuery(con,requestnedges)
 edges
 
+cent<-dbGetQuery(con, "SELECT DISTINCT etudiant1 FROM collaborations;")
+cent
 
+
+
+colnames(cent)<-"prenom_nom"
+cente<-data.frame(etudiant[,1])
+colnames(cente)<-"prenom_nom"
+
+extra_ids <- setdiff(cent,cente)
+extra_ids
+
+extra_idss <- setdiff(cente,cent)
+extra_idss 
+
+##ajouté a etudiant karim_hamzaoui, eloise_bernier, naomie_morin, gabrielle_moreault,maxence_comyn,maude_viens
