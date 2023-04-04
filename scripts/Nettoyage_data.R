@@ -1,10 +1,13 @@
+
+
+
 #-----------------------------------------------------
 # 1. Charger les données
 #
 # Assumant que les données sont sauvées dans le 
 # sous-répertoire data/raw
 #-----------------------------------------------------
-#pénis
+
 # Extraire le nom des fichers de chaque groupe
 
 library(RSQLite)
@@ -44,41 +47,19 @@ rm(list = c('allFiles', 'tab', 'tabFiles', 'tabName', 'ficher', 'groupe'))
 
 
 #-----------------------------------------------------
-# 2.
+# 2. On nettoye collaborations en premier
 
-##Vérification des noms des colonnes
-
-all.equal(names(courdata1),names(courdata2),names(courdata3),names(courdata4),names(courdata5),names(courdata6),names(courdata7),names(courdata8),names(courdata9),names(courdata10))
-all.equal(names(collaborationdata1),names(collaborationdata2),names(collaborationdata3),names(collaborationdata4),names(collaborationdata5),names(collaborationdata6),names(collaborationdata7),names(collaborationdata8),names(collaborationdata9),names(collaborationdata10))
-all.equal(names(etudiantdata1),names(etudiantdata2),names(etudiantdata3),names(etudiantdata4),names(etudiantdata5),names(etudiantdata6),names(etudiantdata7),names(etudiantdata8),names(etudiantdata9),names(etudiantdata10))
-
-##changer le seul nom de colonne différent des autres
-names(etudiantdata4)[names(etudiantdata4) == "prenom_nom."] <- "prenom_nom"
 
 #Utiliser subset pour selectionner seulememnt les colonnes interessante
 
-courdata5 <- subset(courdata5,select = c("sigle","optionnel","credits"))
-courdata7 <- subset(courdata7,select = c("sigle","optionnel","credits"))
-
 collaborationdata7 <- subset(collaborationdata7,select = c("etudiant1","etudiant2","sigle","session"))
 
-etudiantdata3 <- subset(etudiantdata3,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
-etudiantdata4 <- subset(etudiantdata4,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
-etudiantdata9 <- subset(etudiantdata9,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
-etudiantdata7 <- subset(etudiantdata7,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
-
 #on unie les tableaux
-courdata<- rbind(courdata1,courdata2,courdata3,courdata4,courdata5,courdata6,courdata7,courdata8,courdata9,courdata10)
 collaborationdata<- rbind(collaborationdata1,collaborationdata2,collaborationdata3,collaborationdata4,collaborationdata5,collaborationdata6,collaborationdata7,collaborationdata8,collaborationdata9,collaborationdata10)
-etudiantdata<- rbind(etudiantdata1,etudiantdata2,etudiantdata3,etudiantdata4,etudiantdata5,etudiantdata6,etudiantdata7,etudiantdata8,etudiantdata9,etudiantdata10)
 
 #pour enlever les lignes doublons
 
-courdata_unique<-unique(courdata)
 collaborationdata_unique<-unique(collaborationdata)
-
-
-courdata_unique1<-subset(courdata_unique,complete.cases(courdata_unique$sigle))
 collaborationdata_unique1<-subset(collaborationdata_unique,complete.cases(collaborationdata_unique$etudiant1))
 
 1.#Correction fautes de francais collaboration
@@ -156,6 +137,28 @@ class(collaborationdata_unique1)
 
 library(stringr)
 
+# Écriture de la table filtrée dans un nouveau fichier
+pathcoll<- file.path("data","clean","clean_collaboration.csv")
+write.csv(collaborationdata_unique1, pathcoll, row.names = F,col.names = T)
+
+#-----------------------------------------------------
+# 3. On nettoye Étudiant ici
+
+##changer le seul nom de colonne différent des autres pour Étudiant
+
+names(etudiantdata4)[names(etudiantdata4) == "prenom_nom."] <- "prenom_nom"
+
+#Utiliser subset pour selectionner seulememnt les colonnes interessante
+
+etudiantdata3 <- subset(etudiantdata3,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
+etudiantdata4 <- subset(etudiantdata4,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
+etudiantdata9 <- subset(etudiantdata9,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
+etudiantdata7 <- subset(etudiantdata7,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
+
+#on unie les tableaux
+etudiantdata<- rbind(etudiantdata1,etudiantdata2,etudiantdata3,etudiantdata4,etudiantdata5,etudiantdata6,etudiantdata7,etudiantdata8,etudiantdata9,etudiantdata10)
+
+
 2.#Enlever les lignes qui nous interesse pas pour la table étudiant
 etudiant<-unique(etudiantdata)
 nomrow<-seq(1,227,1)
@@ -197,10 +200,28 @@ Students[86, ] <- c("eve_dandonneau",
                     NA,
                     NA,
                     NA)
-pathe<- file.path("data","clean","clean_etudiant.csv")
 
 # Écriture de la table filtrée dans un nouveau fichier
-write.csv(Students,pathe, row.names = T,col.names = T)
+pathe<- file.path("data","clean","clean_etudiant.csv")
+write.csv(Students,pathe, row.names = F,col.names = T)
+
+#-----------------------------------------------------
+# 3. On nettoye cour ici
+
+#Utiliser subset pour selectionner seulememnt les colonnes interessante
+
+courdata5 <- subset(courdata5,select = c("sigle","optionnel","credits"))
+courdata7 <- subset(courdata7,select = c("sigle","optionnel","credits"))
+
+
+
+#on unie les tableaux
+courdata<- rbind(courdata1,courdata2,courdata3,courdata4,courdata5,courdata6,courdata7,courdata8,courdata9,courdata10)
+
+#pour enlever les lignes doublons
+
+courdata_unique<-unique(courdata)
+courdata_unique1<-subset(courdata_unique,complete.cases(courdata_unique$sigle))
 
 
 3.# Nettoyage table cours
@@ -231,17 +252,71 @@ courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ZOO304", TRUE, c
 cour<-unique(courdata_unique1)
 cour_clean<- cour[-36, ]
 
-cour<-unique(courdata_unique1)
-
-
-pathcour<- file.path("data","clean","clean_cour.csv")
-
 # Écriture de la table filtrée dans un nouveau fichier
-write.csv(cour, pathcour, row.names = T,col.names = T)
+pathcour<- file.path("data","clean","clean_cour.csv")
+write.csv(cour_clean, pathcour,row.names = F,col.names = T)
 
+
+
+### On vide l'environnement et on recharge les documents fraichement nettoyés pour commencer le travail du bon pied
+
+rm(list = ls())
+library(RSQLite)
+con <- dbConnect(SQLite(), dbname="reseau.db")
+
+pathe<- file.path("data","clean","clean_etudiant.csv")
+pathcour<- file.path("data","clean","clean_cour.csv")
 pathcoll<- file.path("data","clean","clean_collaboration.csv")
 
-write.csv(collaborationdata_unique1, pathcoll, row.names = T,col.names = T)
+etudiant<-read.csv(file=pathe,sep = ",")
+cour<-read.csv(file=pathcour, sep = ",")
+collaboration<-read.csv(file= pathcoll,sep = ",")
 
-#-----------------------------------------------------
+#----------------------------------------------------------------------------------------------------------
+##Requetes SQL
+
+con <- dbConnect(SQLite(), dbname="reseau.db")
+dbWriteTable(con, append = TRUE, name = "etudiant", value = etudiant, row.names = FALSE)
+dbWriteTable(con, append = TRUE, name = "collaborations", value = collaboration, row.names = FALSE)
+dbWriteTable(con, append = TRUE, name = "cours", value = cour, row.names = FALSE)
+
+
+
+requestcollab <- "
+SELECT
+  etudiant1 AS Auteur,count(etudiant1) AS nb_collab
+FROM collaborations
+GROUP BY etudiant1
+ORDER BY nb_collab DESC;"
+
+collab<- dbGetQuery(con,requestcollab)
+head(collab)
+
+
+requestinter <- "
+SELECT etudiant1 AS Ami1, etudiant2 AS Ami2, COUNT(*) AS nb_interaction
+FROM collaborations
+GROUP BY etudiant1, etudiant2
+ORDER BY nb_interaction DESC
+;"
+inter<- dbGetQuery(con,requestinter)
+inter
+
+
+nbramis<-dbGetQuery(con, "SELECT count(DISTINCT etudiant1)FROM collaborations;")
+nbramis
+intobs<-sum(inter$nb_interaction)
+intobs
+intpsbl<-nbramis*(nbramis-1)/2
+intpsbl
+conectivite<-intobs/intpsbl
+conectivite
+meaninter<-mean(inter$nb_interaction)
+meaninter
+varinter<-var(inter$nb_interaction)
+varinter
+
+
+
+
 
