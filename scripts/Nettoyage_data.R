@@ -236,12 +236,13 @@ courdata5 <- subset(courdata5,select = c("sigle","optionnel","credits"))
 courdata7 <- subset(courdata7,select = c("sigle","optionnel","credits"))
 
 
+##changer le seul nom de colonne différent des autres pour cours
+names(courdata4)[names(courdata4) == "ï..sigle"] <- "sigle"
+
 
 #on unie les tableaux
 courdata<- rbind(courdata1,courdata2,courdata3,courdata4,courdata5,courdata6,courdata7,courdata8,courdata9,courdata10)
 
-##changer le seul nom de colonne différent des autres pour cours
-names(courdata4)[names(courdata4) == "ï..sigle"] <- "sigle"
 
 #pour enlever les lignes doublons
 
@@ -307,8 +308,8 @@ dbExecute(con,"DROP TABLE collaborations;")
 dbExecute(con,"DROP TABLE cours;")
 
 dbWriteTable(con, append = TRUE, name = "etudiant", value = etudiant, row.names = FALSE)
-dbWriteTable(con, append = TRUE, name = "collaborations", value = collaboration, row.names = FALSE)
-dbWriteTable(con, append = TRUE, name = "cours", value = cour, row.names = FALSE)
+dbWriteTable(con, append = TRUE, name = "collaborations", value = collaborations, row.names = FALSE)
+dbWriteTable(con, append = TRUE, name = "cours", value = cours, row.names = FALSE)
 
 
 
