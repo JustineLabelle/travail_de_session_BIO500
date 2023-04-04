@@ -64,7 +64,7 @@ collaborationdata_unique1<-subset(collaborationdata_unique,complete.cases(collab
 
 1.#Correction fautes de francais collaboration
 collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
-  gsub(" ", "$", x)
+  gsub(" ", "%", x)
 }))
 collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
   gsub("ariane_barette", "ariane_barrette", x)
@@ -140,10 +140,10 @@ collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, functi
   gsub("mia_carriere<a0>", "mia_carriere", x)
 }))
 collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
-  gsub("laurianne_plante$", "laurianne_plante", x)
+  gsub("laurianne_plante%", "laurianne_plante", x)
 }))
 collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
-  gsub("INS154$", "INS154", x)
+  gsub("INS154%", "INS154", x)
 }))
 collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
   gsub("eve<a0>_dandonneau", "eve_dandonneau", x)
