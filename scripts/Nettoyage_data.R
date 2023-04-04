@@ -176,7 +176,10 @@ collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, functi
   gsub("louis_philippe_raymond", "louis-philippe_raymond", x)
 }))
 collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
-  gsub("lamelie_harbeck_bastien", "amelie_harbeck-bastien", x)
+  gsub("amelie_harbeck_bastien", "amelie_harbeck-bastien", x)
+}))
+collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+  gsub("marie_burghin", "marie_bughin", x)
 }))
 
 
@@ -219,14 +222,14 @@ ligness_a_supprimer <- c("216", "207", "94","23", "196", "31", "120", "67","173"
                          , "29", "211","77", "169", "107", "78", "64","209", "10", "20"
                          , "52", "80","18", "81", "82", "19", "125","61", "83", "84"
                          , "38", "124","17", "86", "12", "54", "87","26", "88", "226"
-                         , "90", "161","227", "11", "58", "63", "145","162","153")
+                         , "90", "161","227", "11", "58", "63", "145","162","153","200")
 
 lignes_a_supprimer <- as.integer(ligness_a_supprimer)
 
 # Suppression des lignes spécifiées
 Students <- etudiant[-lignes_a_supprimer,]
 
-nomrow2<-seq(1,157,1)
+nomrow2<-seq(1,156,1)
 row.names(Students)<-nomrow2
 
 
@@ -257,7 +260,7 @@ nouvelles_lignes <- data.frame(prenom_nom = c("karim_hamzaoui", "eloise_bernier"
 
 Students <- rbind(Students, nouvelles_lignes)
 
-nomrow3<-seq(1,163,1)
+nomrow3<-seq(1,162,1)
 row.names(Students)<-nomrow3
 
 # Écriture de la table filtrée dans un nouveau fichier
@@ -403,19 +406,20 @@ FROM collaborations
 edges<- dbGetQuery(con,requestnedges)
 edges
 
-cent<-dbGetQuery(con, "SELECT DISTINCT etudiant1 FROM collaborations;")
-cent
+#cent<-dbGetQuery(con, "SELECT DISTINCT etudiant1 FROM collaborations;")
+#cent
 
 
 
-colnames(cent)<-"prenom_nom"
-cente<-data.frame(etudiant[,1])
-colnames(cente)<-"prenom_nom"
+#colnames(cent)<-"prenom_nom"
+#cente<-data.frame(etudiant[,1])
+#colnames(cente)<-"prenom_nom"
 
-extra_ids <- setdiff(cent,cente)
-extra_ids
+#extra_ids <- setdiff(cent,cente)
+#extra_ids
 
-extra_idss <- setdiff(cente,cent)
-extra_idss 
+#extra_idss <- setdiff(cente,cent)
+#extra_idss 
 
 ##ajouté a etudiant karim_hamzaoui, eloise_bernier, naomie_morin, gabrielle_moreault,maxence_comyn,maude_viens
+
