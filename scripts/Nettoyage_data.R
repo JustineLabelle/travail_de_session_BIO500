@@ -194,7 +194,7 @@ ligness_a_supprimer <- c("216", "207", "94","23", "196", "31", "120", "67","173"
                          , "29", "211","77", "169", "107", "78", "64","209", "10", "20"
                          , "52", "80","18", "81", "82", "19", "125","61", "83", "84"
                          , "38", "124","17", "86", "12", "54", "87","26", "88", "226"
-                         , "90", "161","227", "11", "58", "63", "145","163", "152")
+                         , "90", "161","227", "11", "58", "63", "145","162","153")
 
 lignes_a_supprimer <- as.integer(ligness_a_supprimer)
 
@@ -240,10 +240,14 @@ courdata7 <- subset(courdata7,select = c("sigle","optionnel","credits"))
 #on unie les tableaux
 courdata<- rbind(courdata1,courdata2,courdata3,courdata4,courdata5,courdata6,courdata7,courdata8,courdata9,courdata10)
 
+##changer le seul nom de colonne différent des autres pour cours
+names(courdata4)[names(courdata4) == "ï..sigle"] <- "sigle"
+
 #pour enlever les lignes doublons
 
 courdata_unique<-unique(courdata)
 courdata_unique1<-subset(courdata_unique,complete.cases(courdata_unique$sigle))
+
 
 # Nettoyage table cours
 courdata_unique1$optionnel <- gsub("FAUX", "FALSE", courdata_unique1$optionnel)
@@ -290,8 +294,8 @@ pathcour<- file.path("data","clean","clean_cour.csv")
 pathcoll<- file.path("data","clean","clean_collaboration.csv")
 
 etudiant<-read.csv(file=pathe,sep = ",")
-cour<-read.csv(file=pathcour, sep = ",")
-collaboration<-read.csv(file= pathcoll,sep = ",")
+cours<-read.csv(file=pathcour, sep = ",")
+collaborations<-read.csv(file= pathcoll,sep = ",")
 
 #----------------------------------------------------------------------------------------------------------
 ##Requetes SQL
@@ -329,6 +333,7 @@ inter<- dbGetQuery(con,requestinter)
 inter
 
 
+
 nbramis<-dbGetQuery(con, "SELECT count(DISTINCT etudiant1)FROM collaborations;")
 nbramis
 intobs<-sum(inter$nb_interaction)
@@ -344,5 +349,20 @@ varinter
 
 
 
+
+
+requestnodes<- "
+SELECT *
+FROM etudiant
+;"
+nodes<- dbGetQuery(con,requestnodes)
+nodes
+
+requestnedges<- "
+SELECT etudiant1 AS Ami1, etudiant2 AS Ami2
+FROM collaborations
+;"
+edges<- dbGetQuery(con,requestnedges)
+edges
 
 
