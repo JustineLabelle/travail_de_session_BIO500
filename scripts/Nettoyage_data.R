@@ -145,6 +145,9 @@ collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, functi
 collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
   gsub("INS154$", "INS154", x)
 }))
+collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+  gsub("eve<a0>_dandonneau", "eve_dandonneau", x)
+}))
 
 class(collaborationdata_unique1)
 
