@@ -297,6 +297,11 @@ collaboration<-read.csv(file= pathcoll,sep = ",")
 ##Requetes SQL
 
 con <- dbConnect(SQLite(), dbname="reseau.db")
+
+dbExecute(con,"DROP TABLE etudiant;")
+dbExecute(con,"DROP TABLE collaborations;")
+dbExecute(con,"DROP TABLE cours;")
+
 dbWriteTable(con, append = TRUE, name = "etudiant", value = etudiant, row.names = FALSE)
 dbWriteTable(con, append = TRUE, name = "collaborations", value = collaboration, row.names = FALSE)
 dbWriteTable(con, append = TRUE, name = "cours", value = cour, row.names = FALSE)
