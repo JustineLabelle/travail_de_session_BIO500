@@ -408,9 +408,30 @@ edges
 
 #cent<-dbGetQuery(con, "SELECT DISTINCT etudiant1 FROM collaborations;")
 #cent
+# Charger le package igraph
+library(igraph)
+
+# Créer un objet graph à partir des données de la requête SQL
+graph <- graph.data.frame(inter, directed = FALSE)
+
+# Convertir le graph en une matrice d'adjacence
+adj_matrix <- as.matrix(get.adjacency(graph))
+
+# Convertir la matrice d'adjacence en une matrice binaire
+binary_matrix <- ifelse(adj_matrix > 0, 1, 0)
+
+# Ajouter les noms des étudiants comme noms de lignes et de colonnes
+colnames(binary_matrix) <- rownames(binary_matrix) <- V(graph)$name
+
+g<-graph.adjacency(binary_matrix)
 
 
-
+plot(g, edge.arrow.mode = 0,
+     vertex.frame.color = NA, vertex.size = 5, 
+     vertex.label.cex = 0.5)
+distances(g)
+imponoeud<-eigen_centrality(g)$vector
+sort(imponoeud, decreasing = TRUE)
 #colnames(cent)<-"prenom_nom"
 #cente<-data.frame(etudiant[,1])
 #colnames(cente)<-"prenom_nom"
