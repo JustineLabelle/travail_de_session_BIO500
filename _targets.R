@@ -23,3 +23,5 @@ list(
     etudiant(rawdatatarget),
   )
 )
+source("_targets.R")
+tar_glimpse()
