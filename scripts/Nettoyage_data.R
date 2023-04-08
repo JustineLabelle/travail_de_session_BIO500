@@ -427,11 +427,14 @@ g<-graph.adjacency(binary_matrix)
 
 
 plot(g, edge.arrow.mode = 0,
-     vertex.frame.color = NA, vertex.size = 5, 
-     vertex.label.cex = 0.5)
+     vertex.frame.color = NA, vertex.size = 4, 
+     vertex.label.cex = 0,4, layout = layout.kamada.kawai(g), xlim=c(-1,1), ylim=c(-1,1))
 distances(g)
 imponoeud<-eigen_centrality(g)$vector
 sort(imponoeud, decreasing = TRUE)
+wtc <- walktrap.community(g)
+# Calcule la modularité à partir des communautés
+modularity(wtc)
 #colnames(cent)<-"prenom_nom"
 #cente<-data.frame(etudiant[,1])
 #colnames(cente)<-"prenom_nom"
