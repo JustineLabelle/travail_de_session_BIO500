@@ -362,6 +362,7 @@ ORDER BY nb_collab DESC;"
 
 collab<- dbGetQuery(con,requestcollab)
 head(collab)
+collab
 
 
 requestinter <- "
@@ -412,29 +413,35 @@ edges
 library(igraph)
 
 # Créer un objet graph à partir des données de la requête SQL
-graph <- graph.data.frame(inter, directed = FALSE)
+graph <- graph.data.frame(inter, directed = TRUE)
 
 # Convertir le graph en une matrice d'adjacence
 adj_matrix <- as.matrix(get.adjacency(graph))
 
-# Convertir la matrice d'adjacence en une matrice binaire
-binary_matrix <- ifelse(adj_matrix > 0, 1, 0)
+# Convertir la matrice d'adjacence en une matrice binaire potentiellement pas utile
+#binary_matrix <- ifelse(adj_matrix > 0, 1, 0)
 
-# Ajouter les noms des étudiants comme noms de lignes et de colonnes
-colnames(binary_matrix) <- rownames(binary_matrix) <- V(graph)$name
+# Ajouter les noms des étudiants comme noms de lignes et de colonnes pas certain que c'est utile
+#(binary_matrix) <- rownames(binary_matrix) <- V(graph)$name
 
-g<-graph.adjacency(binary_matrix)
+g<-graph.adjacency(adj_matrix)
 
 
 plot(g, edge.arrow.mode = 0,
      vertex.frame.color = NA, vertex.size = 4, 
-     vertex.label.cex = 0,4, layout = layout.kamada.kawai(g), xlim=c(-1,1), ylim=c(-1,1))
+     vertex.label.cex = 0,4, layout = layout.kamada.kawai(g))
 distances(g)
 imponoeud<-eigen_centrality(g)$vector
 sort(imponoeud, decreasing = TRUE)
 wtc <- walktrap.community(g)
 # Calcule la modularité à partir des communautés
 modularity(wtc)
+#trouver les cliques
+cliques(g)
+clique_size_counts(g)
+clique_num(g)
+max_cliques(g)
+
 #colnames(cent)<-"prenom_nom"
 #cente<-data.frame(etudiant[,1])
 #colnames(cente)<-"prenom_nom"
