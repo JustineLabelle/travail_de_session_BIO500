@@ -32,6 +32,10 @@ list(
   tar_target(
     name = clean_etudianttarget,
     command = etudiant(rawdatatarget),
+  ),
+  tar_target(
+    name = manip, # Cible pour l'exécution de la figure
+    command = manipulations(clean_collaborationtarget,clean_etudianttarget,clean_courtarget),
   )
 )
 
