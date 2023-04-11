@@ -5,6 +5,7 @@ source("scripts/rawdata.R")
 source("scripts/collaboration.R")
 source ("scripts/cour.R")
 source ("scripts/etudiant.R")
+source ("scripts/manipulations.R")
 #source ("scripts/typeind.R")
 
 list(
