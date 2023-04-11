@@ -430,6 +430,22 @@ g<-graph.adjacency(adj_matrix)
 plot(g, edge.arrow.mode = 0,
      vertex.frame.color = NA, vertex.size = 4, 
      vertex.label.cex = 0,4, layout = layout.kamada.kawai(g))
+
+
+
+# Calculer la centralité de degré
+deg_centrality <- eigen_centrality(g)
+
+# Définir une palette de couleurs pour la centralité de degré
+colors <- rev(heat.colors(max(deg_centrality)))
+
+# Tracer le graphique avec les couleurs de nœuds correspondantes à la centralité de degré
+plot(g, vertex.color = colors[deg_centrality], edge.arrow.mode = 0,
+     vertex.frame.color = NA, vertex.size = 4, 
+     vertex.label.cex = 0.4, layout = layout.kamada.kawai(g))
+
+
+
 distances(g)
 imponoeud<-eigen_centrality(g)$vector
 sort(imponoeud, decreasing = TRUE)
