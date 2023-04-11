@@ -74,4 +74,5 @@ etudiant<- function(rawdata) {
   # Écriture de la table filtrée dans un nouveau fichier
   pathe<- file.path("data","clean","clean_etudiant.csv")
   write.csv(Students,pathe, row.names = F,col.names = T)
-}
+  clean_etudiant <<- Students
+  }

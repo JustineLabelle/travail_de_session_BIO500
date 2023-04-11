@@ -1,4 +1,3 @@
-
 library(targets)
 library(tarchetypes)
 
@@ -22,14 +21,14 @@ list(
     name = rawdatatarget,
     command = rawdata(file_paths) #¸étape prep donné dans target cours
   ),
- # tar_target(
-  #  clean_collaborationtarget, # Cible pour le modèle
-   # collaboration(rawdatatarget) # Exécution de l'analyse
-  #),
- # tar_target(
-  #  clean_courtarget, # Cible pour l'exécution de la figure
-   # cour(rawdatatarget),
-  #),
+  tar_target(
+    name = clean_collaborationtarget, # Cible pour le modèle
+    command = collaboration(rawdatatarget) # Exécution de l'analyse
+  ),
+  tar_target(
+    name = clean_courtarget, # Cible pour l'exécution de la figure
+    command = cour(rawdatatarget),
+  ),
   tar_target(
     name = clean_etudianttarget,
     command = etudiant(rawdatatarget),

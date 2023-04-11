@@ -51,7 +51,7 @@ cour <- function(rawdata) {
   # Écriture de la table filtrée dans un nouveau fichier
   pathcour<- file.path("data","clean","clean_cour.csv")
   write.csv(cour_clean, pathcour,row.names = F,col.names = T)
-  
+  clean_cour <<- cour_clean
 }
 
 

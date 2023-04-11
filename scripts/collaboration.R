@@ -142,6 +142,7 @@ collaboration <- function(rawdata) {
   # Écriture de la table filtrée dans un nouveau fichier
   pathcoll<- file.path("data","clean","clean_collaboration.csv")
   write.csv(collaborationdata_unique1, pathcoll, row.names = F,col.names = T)
-}
+  clean_collaborations <<- collaborationdata_unique1
+  }
 
 
