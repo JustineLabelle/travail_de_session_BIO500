@@ -4,11 +4,12 @@ source ("scripts/cour.R")
 source ("scripts/etudiant.R")
 #source ("scripts/typeind.R")
 library(targets)
-
+library(tarchetypes)
+#rajouter les deux fonctions que le prof pour mettre à jour
 list(
   tar_target(
     rawdatatarget,
-    rawdata()
+    rawdata() #¸étape prep donné dans target cours
   ),
   tar_target(
     clean_collaborationtarget, # Cible pour le modèle
