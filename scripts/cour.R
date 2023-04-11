@@ -52,7 +52,6 @@ cour <- function(rawdata) {
   pathcour<- file.path("data","clean","clean_cour.csv")
   write.csv(cour_clean, pathcour,row.names = F,col.names = T)
   
-  
 }
 
 

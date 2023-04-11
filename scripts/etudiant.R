@@ -1,4 +1,7 @@
 etudiant<- function(rawdata) {
+
+  list2env(master_list, envir = .GlobalEnv)
+  
   ##changer le seul nom de colonne différent des autres pour Étudiant
   
   names(etudiantdata4)[names(etudiantdata4) == "prenom_nom."] <- "prenom_nom"
@@ -27,14 +30,14 @@ etudiant<- function(rawdata) {
                            , "29", "211","77", "169", "107", "78", "64","209", "10", "20"
                            , "52", "80","18", "81", "82", "19", "125","61", "83", "84"
                            , "38", "124","17", "86", "12", "54", "87","26", "88", "226"
-                           , "90", "161","227", "11", "58", "63", "145","162","153")
+                           , "90", "161","227", "11", "58", "63", "145","162","153","200")
   
   lignes_a_supprimer <- as.integer(ligness_a_supprimer)
   
   # Suppression des lignes spécifiées
   Students <- etudiant[-lignes_a_supprimer,]
   
-  nomrow2<-seq(1,157,1)
+  nomrow2<-seq(1,156,1)
   row.names(Students)<-nomrow2
   
   
@@ -55,9 +58,20 @@ etudiant<- function(rawdata) {
                       NA,
                       NA,
                       NA)
+  ##Ajouter des étudiantsqui se rerouve dans le fichier collaboration et pas dans le ficheier etudiant:
+  #karim_hamzaoui, eloise_bernier, naomie_morin, gabrielle_moreault,maxence_comyn,maude_viens
+  
+  nouvelles_lignes <- data.frame(prenom_nom = c("karim_hamzaoui", "eloise_bernier","naomie_morin", "gabrielle_moreault","maxence_comyn", "maude_viens"), 
+                                 prenom=c("karim", "eloise","naomie", "gabrielle","maxence", "maude"),
+                                 nom = c("hamzaoui", "bernier","morin", "moreault","comyn", "viens"),region_administrative=NA,regime_coop=NA,formation_prealable=NA,annee_debut=NA,programme=NA)
+  
+  
+  Students <- rbind(Students, nouvelles_lignes)
+  
+  nomrow3<-seq(1,162,1)
+  row.names(Students)<-nomrow3
   
   # Écriture de la table filtrée dans un nouveau fichier
   pathe<- file.path("data","clean","clean_etudiant.csv")
   write.csv(Students,pathe, row.names = F,col.names = T)
-  
 }

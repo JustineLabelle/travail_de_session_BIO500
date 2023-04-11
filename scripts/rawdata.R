@@ -1,9 +1,7 @@
 rawdata <- function() {
   
-  library(RSQLite)
-  con <- dbConnect(SQLite(), dbname="reseau.db")
   
-  allFiles <- dir('data/raw/')
+ # allFiles <- dir('data/raw/')
   
   # Tables à fusioner
   tabNames <- c('collaboration', 'cour', 'etudiant')
@@ -31,9 +29,11 @@ rawdata <- function() {
       
     }
   }
-  
-  # nettoyer des objets temporaires utilisé dans la boucle
-  rm(list = c('allFiles', 'tab', 'tabFiles', 'tabName', 'ficher', 'groupe'))
-  }
-
+  master_list = list(collaborationdata1,collaborationdata10,collaborationdata2,collaborationdata3,collaborationdata4,collaborationdata5,collaborationdata6,collaborationdata7,collaborationdata8,collaborationdata9,etudiantdata1,etudiantdata10,etudiantdata2,etudiantdata3,etudiantdata4,etudiantdata5,etudiantdata6,etudiantdata7,etudiantdata8,etudiantdata9,courdata1,courdata10,courdata2,courdata3,courdata4,courdata5,courdata6,courdata7,courdata8,courdata9)
+  master_list <- setNames(master_list, c("collaborationdata1","collaborationdata10","collaborationdata2","collaborationdata3","collaborationdata4","collaborationdata5","collaborationdata6","collaborationdata7","collaborationdata8","collaborationdata9","etudiantdata1","etudiantdata10","etudiantdata2","etudiantdata3","etudiantdata4","etudiantdata5","etudiantdata6","etudiantdata7","etudiantdata8","etudiantdata9","courdata1","courdata10","courdata2","courdata3","courdata4","courdata5","courdata6","courdata7","courdata8","courdata9"))
+   # nettoyer des objets temporaires utilisé dans la boucle
+  rm(list = c('allFiles', 'tab', 'tabFiles', 'tabName', 'ficher', 'groupe',"L","nbGroupe","separateur","tabNames"))
+  rm(list=c("collaborationdata1","collaborationdata10","collaborationdata2","collaborationdata3","collaborationdata4","collaborationdata5","collaborationdata6","collaborationdata7","collaborationdata8","collaborationdata9","etudiantdata1","etudiantdata10","etudiantdata2","etudiantdata3","etudiantdata4","etudiantdata5","etudiantdata6","etudiantdata7","etudiantdata8","etudiantdata9","courdata1","courdata10","courdata2","courdata3","courdata4","courdata5","courdata6","courdata7","courdata8","courdata9"))
+  return(master_list)
+}
 

@@ -11,7 +11,7 @@ collaboration <- function(rawdata) {
   collaborationdata_unique<-unique(collaborationdata)
   collaborationdata_unique1<-subset(collaborationdata_unique,complete.cases(collaborationdata_unique$etudiant1))
   
-  1.#Correction fautes de francais collaboration
+  #Correction fautes de francais collaboration
   collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
     gsub(" ", "%", x)
   }))
@@ -83,6 +83,15 @@ collaboration <- function(rawdata) {
     gsub("yannick_sagneau", "yanick_sageau", x)
   }))
   collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+    gsub("yannick_sageau", "yanick_sageau", x)
+  }))
+  collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+    gsub("yannick_sageau", "yanick_sageau", x)
+  }))
+  collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+    gsub("yanick_sagneau", "yanick_sageau", x)
+  }))
+  collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
     gsub("juliette_meilleur<a0>", "juliette_meilleur", x)
   }))
   collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
@@ -103,8 +112,32 @@ collaboration <- function(rawdata) {
   collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
     gsub("philippe_bourrassa", "philippe_bourassa", x)
   }))
+  collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+    gsub("philippe_leonard_dufour", "philippe_leonard-dufour", x)
+  }))
+  collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+    gsub("edouard_nadon-baumier", "edouard_nadon-beaumier", x)
+  }))
+  collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+    gsub("cassandra_gobin", "cassandra_godin", x)
+  }))
+  collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+    gsub("louis-phillippe_theriault", "louis-philippe_theriault", x)
+  }))
+  collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+    gsub("louis_philippe_raymond", "louis-philippe_raymond", x)
+  }))
+  collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+    gsub("amelie_harbeck_bastien", "amelie_harbeck-bastien", x)
+  }))
+  collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+    gsub("marie_burghin", "marie_bughin", x)
+  }))
+  
   
   class(collaborationdata_unique1)
+  
+  library(stringr)
   
   # Écriture de la table filtrée dans un nouveau fichier
   pathcoll<- file.path("data","clean","clean_collaboration.csv")

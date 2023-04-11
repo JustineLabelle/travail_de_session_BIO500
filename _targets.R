@@ -1,28 +1,38 @@
+
+library(targets)
+library(tarchetypes)
+
 source("scripts/rawdata.R")
 source("scripts/collaboration.R")
 source ("scripts/cour.R")
 source ("scripts/etudiant.R")
 #source ("scripts/typeind.R")
-library(targets)
-library(tarchetypes)
-#rajouter les deux fonctions que le prof pour mettre à jour
+
 list(
   tar_target(
-    rawdatatarget,
-    rawdata() #¸étape prep donné dans target cours
+    name = path, # Cible
+    command = "./Data/raw", # Dossier contenant les fichiers de données
+    format = "file" # Format de la cible
   ),
   tar_target(
-    clean_collaborationtarget, # Cible pour le modèle
-    collaboration(rawdatatarget) # Exécution de l'analyse
+    name = file_paths, # Cible
+    command = list.files(path, full.names = TRUE) # Liste les fichiers dans le dossier
   ),
   tar_target(
-    clean_courtarget, # Cible pour l'exécution de la figure
-    cour(rawdatatarget),
+    name = rawdatatarget,
+    command = rawdata(file_paths) #¸étape prep donné dans target cours
   ),
+ # tar_target(
+  #  clean_collaborationtarget, # Cible pour le modèle
+   # collaboration(rawdatatarget) # Exécution de l'analyse
+  #),
+ # tar_target(
+  #  clean_courtarget, # Cible pour l'exécution de la figure
+   # cour(rawdatatarget),
+  #),
   tar_target(
-    clean_etudianttarget,
-    etudiant(rawdatatarget),
+    name = clean_etudianttarget,
+    command = etudiant(rawdatatarget),
   )
 )
-source("_targets.R")
-tar_glimpse()
+
