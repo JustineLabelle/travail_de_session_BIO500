@@ -450,6 +450,7 @@ distances(g)
 imponoeud<-eigen_centrality(g)$vector
 sort(imponoeud, decreasing = TRUE)
 wtc <- walktrap.community(g)
+
 # Calcule la modularité à partir des communautés
 modularity(wtc)
 #trouver les cliques
@@ -457,6 +458,14 @@ cliques(g)
 clique_size_counts(g)
 clique_num(g)
 max_cliques(g)
+
+#centralité du reseau
+eigen_centrality(g)$vector
+
+# Évalue la présence communautés dans le graphe
+wtc = walktrap.community(g)
+# Calcule la modularité à partir des communautés
+modularity(wtc)
 
 #colnames(cent)<-"prenom_nom"
 #cente<-data.frame(etudiant[,1])
