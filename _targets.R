@@ -5,6 +5,7 @@ source("scripts/rawdata.R")
 source("scripts/collaboration.R")
 source ("scripts/cour.R")
 source ("scripts/etudiant.R")
+source ("scripts/manipulations.R")
 #source ("scripts/typeind.R")
 
 list(
@@ -35,7 +36,7 @@ list(
   ),
   tar_target(
     name = manip, # Cible pour l'exécution de la figure
-    command = manipulations(clean_collaborationtarget,clean_etudianttarget,clean_courtarget),
+    command = manipulations(clean_collaborationtarget, clean_courtarget, clean_etudianttarget),
   )
 )
 

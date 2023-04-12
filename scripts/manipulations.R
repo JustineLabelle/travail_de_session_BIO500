@@ -1,6 +1,6 @@
 manipulations <- function(rawdata) {
 ##Requetes SQL
-
+library(RSQLite)
 con <- dbConnect(SQLite(), dbname="reseau.db")
 
 dbExecute(con,"DROP TABLE etudiant;")
