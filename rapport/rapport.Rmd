@@ -49,7 +49,7 @@ output: rticles::pnas_article
 
 # Bibliographie {.unnumbered}
 
-References should be cited in numerical order as they appear in text; this will be done automatically via bibtex, e.g. @belkin2002using and [@berard1994embedding; @coifman2005geometric]. All references, including for the SI, should be included in the main manuscript file. References appearing in both sections should not be duplicated. SI references included in tables should be included with the main reference section.
+References should be cited in numerical order as they appear in text; this will be done automatically via bibtex, e.g. @belkin2002using and [@berard1994embedding; @coifman2005geometric]. All references, including for the SI, should be included in the main manuscript file. References appearing in both sections should not be duplicated. SI references included in tables should be included with the main reference section
 
 <!-- Leave these lines as they are at the end of your .Rmd file to ensure placement of methods & acknowledgements sections before the references-->
 
