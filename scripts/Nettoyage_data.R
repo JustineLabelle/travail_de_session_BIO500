@@ -457,9 +457,8 @@ g<-graph.adjacency(adj_matrix)
 
 
 plot(g, edge.arrow.mode = 0,
-     vertex.frame.color = NA, vertex.size = 4, 
-     vertex.label.cex = 0,4, layout = layout.kamada.kawai(g))
-
+     vertex.frame.color = NA, vertex.size = 3, 
+     vertex.label.cex = 0.5, layout = layout.kamada.kawai(g))
 
 
 # Calculer la centralité de degré
