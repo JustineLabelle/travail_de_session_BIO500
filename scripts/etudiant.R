@@ -1,6 +1,6 @@
-etudiant<- function(rawdata) {
+etudiant<- function(rawdatatarget) {
 
-  list2env(master_list, envir = .GlobalEnv)
+  list2env(list_etudiant, envir = .GlobalEnv)
   
   ##changer le seul nom de colonne différent des autres pour Étudiant
   
@@ -44,11 +44,11 @@ etudiant<- function(rawdata) {
   Students[39, ] <- c("penelope_robert",
                       "penelope",
                       "robert",
-                      "capitale-nationale",
-                      "VRAI",
-                      "preuniversitaire",
-                      "A2020",
-                      "269000")
+                      NA,
+                      NA,
+                      NA,
+                      NA,
+                      NA)
   
   Students[86, ] <- c("eve_dandonneau",
                       "eve",
@@ -58,7 +58,20 @@ etudiant<- function(rawdata) {
                       NA,
                       NA,
                       NA)
-  ##Ajouter des étudiantsqui se rerouve dans le fichier collaboration et pas dans le ficheier etudiant:
+  
+  Students[115, ] <- c("charles_ferland",
+                      "charles",
+                      "ferland",
+                      "estrie",
+                      "TRUE",
+                      "preuniversitaire",
+                      "A2020",
+                      "269000")
+  
+  Students$regime_coop <- gsub("FAUX", "FALSE", Students$regime_coop)
+  Students$regime_coop <- gsub("VRAI", "TRUE", Students$regime_coop)
+  
+  ##Ajouter des étudiants qui se rerouvent dans le fichier collaboration et pas dans le ficheier etudiant:
   #karim_hamzaoui, eloise_bernier, naomie_morin, gabrielle_moreault,maxence_comyn,maude_viens
   
   nouvelles_lignes <- data.frame(prenom_nom = c("karim_hamzaoui", "eloise_bernier","naomie_morin", "gabrielle_moreault","maxence_comyn", "maude_viens"), 

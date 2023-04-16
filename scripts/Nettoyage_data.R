@@ -407,6 +407,31 @@ FROM collaborations
 edges<- dbGetQuery(con,requestnedges)
 edges
 
+requestanne <- "
+SELECT etudiant1 AS Ami, annee_debut AS Année_début
+FROM collaborations
+FULL OUTER JOIN etudiant 
+ON collaborations.etudiant1 = etudiant.prenom_nom 
+GROUP BY etudiant1
+ORDER BY nb_interaction_diff DESC
+;"
+anne<- dbGetQuery(con,requestanne)
+anne
+
+requestpasse <- "
+SELECT etudiant1 AS Ami, COUNT(*) AS nb_interaction_diff, formation_prealable AS Formation_préalable
+FROM collaborations
+FULL OUTER JOIN etudiant 
+ON collaborations.etudiant1 = etudiant.prenom_nom 
+GROUP BY etudiant1
+ORDER BY nb_interaction_diff DESC
+;"
+passe<- dbGetQuery(con,requestpasse)
+passe
+
+
+
+
 #cent<-dbGetQuery(con, "SELECT DISTINCT etudiant1 FROM collaborations;")
 #cent
 # Charger le package igraph
