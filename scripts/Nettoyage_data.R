@@ -249,7 +249,7 @@ Students[17, ] <- c("kayla_trempe-kay",
                     "A2020",
                     "269000")
 
-Students[39, ] <- c("penelope_robert",
+Students[40, ] <- c("penelope_robert",
                     "penelope",
                     "robert",
                     NA,
