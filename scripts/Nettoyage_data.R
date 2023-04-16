@@ -546,3 +546,34 @@ modularity(wtc)
 
 ##ajouté a etudiant karim_hamzaoui, eloise_bernier, naomie_morin, gabrielle_moreault,maxence_comyn,maude_viens
 
+
+requestinter <- "
+SELECT etudiant1 AS Ami1, etudiant2 AS Ami2, COUNT(*) AS nb_interaction
+FROM collaborations
+GROUP BY etudiant1, etudiant2
+ORDER BY nb_interaction DESC
+;"
+inter<- dbGetQuery(con,requestinter)
+inter
+
+# Créer un objet graph à partir des données de la requête SQL
+graph <- graph.data.frame(inter, directed = TRUE)
+
+# Convertir le graph en une matrice d'adjacence
+adj_matrix <- as.matrix(get.adjacency(graph))
+
+g<-graph.adjacency(adj_matrix)
+
+ec <- eigen_centrality(g)$vector
+
+centrality_df <- data.frame(nom = names(ec), centralite = ec)
+
+
+infotab <- merge(etudiant, centrality_df, by.x = "prenom_nom", by.y = "nom")
+
+
+library(vioplot)
+
+# Créer le violon plot
+vioplot(centralite ~ annee_debut, data = infotab, col = "blue")
+
