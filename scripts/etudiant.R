@@ -67,7 +67,7 @@ etudiant<- function(rawdatatarget) {
                       "preuniversitaire",
                       "A2020",
                       "269000")
-  
+  ##Changement des vrai faux en true false
   Students$regime_coop <- gsub("FAUX", "FALSE", Students$regime_coop)
   Students$regime_coop <- gsub("VRAI", "TRUE", Students$regime_coop)
   

@@ -412,7 +412,7 @@ edges<- dbGetQuery(con,requestnedges)
 edges
 
 requestanne <- "
-SELECT etudiant1 AS Ami, annee_debut AS Année_début
+SELECT etudiant1 AS Amis, annee_debut AS Année_début
 FROM collaborations
 FULL OUTER JOIN etudiant 
 ON collaborations.etudiant1 = etudiant.prenom_nom 
