@@ -3,40 +3,20 @@ title: Template for preparing your research report submission to PNAS using RMar
 
 # Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
 author:
-  - name: Philippe Bourassa
-    affiliation: a, 1
   - name: Simon Bourgeois
     affiliation: a
-  - name: Justine Labelle
-    affiliation: a
+  - name: Philippe Bourassa 
+    affiliation: b
   - name: Kayla Trempe Kay
-    affiliation: a
+    affiliation: c
+  - name: Justine Labelle
+    affiliation: d
 address:
-  
   - code: a
-    address: Faculté des sciences, Université de Sherbrooke, Boulevard de l'Université, Sherbrooke, Québec, Canada, J1K 2R1
-    
-
-corresponding_author:
-  code: 1
-  text: ""
-  code: 2
-  text: "To whom correspondence should be addressed. E-mail: bob@email.com"
-
-# For footer text
-lead_author_surname: Anonymous
-
-
+    address: Université de Sherbrooke, Départment de biologie, 2500 Boulevard de l'Université, Sherbrooke, Québec, J1K 2R1
 
 abstract: |
   Please provide an abstract of no more than 250 words in a single paragraph. Abstracts should explain to the general reader the major contributions of the article. References in the abstract must be cited in full within the abstract itself and cited in the text.
-
-
-significance: |
-  Authors must submit a 120-word maximum statement about the significance of their research paper written at a level understandable to an undergraduate educated scientist outside their field of speciality. The primary goal of the Significance Statement is to explain the relevance of the work in broad context to a broad readership. The Significance Statement appears in the paper itself and is required for all research papers.
-
-acknowledgements: |
-  Please include your acknowledgments here, set in a single paragraph. Please do not include any acknowledgments in the Supporting Information, or anywhere else in the manuscript.
 
 keywords:
   - one
