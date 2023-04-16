@@ -208,6 +208,10 @@ etudiantdata7 <- subset(etudiantdata7,select = c("prenom_nom","prenom","nom","re
 #on unie les tableaux
 etudiantdata<- rbind(etudiantdata1,etudiantdata2,etudiantdata3,etudiantdata4,etudiantdata5,etudiantdata6,etudiantdata7,etudiantdata8,etudiantdata9,etudiantdata10)
 
+#on transforme en TRUE et FALSE
+etudiantdata$regime_coop <- gsub("FAUX", "FALSE", etudiantdata$regime_coop)
+etudiantdata$regime_coop <- gsub("VRAI", "TRUE", etudiantdata$regime_coop)
+
 
 #Enlever les lignes qui nous interesse pas pour la table étudiant
 etudiant<-unique(etudiantdata)
