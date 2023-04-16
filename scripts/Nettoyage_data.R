@@ -224,7 +224,7 @@ nomrow<-seq(1,227,1)
 row.names(etudiant)<-nomrow
 
 # Spécification des valeurs à supprimer
-ligness_a_supprimer <- c("216", "207", "94","23", "196", "31", "120", "67","173", "122", "195"
+ligness_a_supprimer <- c("216","40", "207", "94","23", "196", "31", "120", "67","173", "122", "195"
                          , "206", "99","68", "55", "197", "16", "133","123", "71", "208"
                          , "72", "59","104", "117", "141", "184", "8","76", "114", "106"
                          , "29", "211","77", "169", "107", "78", "64","209", "10", "20"
@@ -293,6 +293,36 @@ Students[67, ] <- c("roxanne_bernier",
                     "preuniversitaire",
                     "A2020",
                     "269000")
+
+
+Students[149, ] <- c("catherine_viel-lapointe",
+                    "catherine",
+                    "viel-lapointe",
+                    NA,
+                    NA,
+                    NA,
+                    NA,
+                    NA)
+
+Students[118, ] <- c("louis-philippe_raymond",
+                    "louis-philippe",
+                    "raymond",
+                    NA,
+                    NA,
+                    NA,
+                    NA,
+                    NA)
+
+Students[94, ] <- c("laurianne_plante",
+                    "laurianne",
+                    "plante",
+                    NA,
+                    NA,
+                    NA,
+                    NA,
+                    NA)
+
+
 ##Ajouter des étudiantsqui se rerouve dans le fichier collaboration et pas dans le ficheier etudiant:
 #karim_hamzaoui, eloise_bernier, naomie_morin, gabrielle_moreault,maxence_comyn,maude_viens
 
