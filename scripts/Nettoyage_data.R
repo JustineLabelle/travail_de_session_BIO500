@@ -602,8 +602,20 @@ centrality_df <- data.frame(nom = names(ec), centralite = ec)
 infotab <- merge(etudiant, centrality_df, by.x = "prenom_nom", by.y = "nom")
 
 
+
 library(vioplot)
 
+infotab$annee_debut <- factor(infotab$annee_debut)
+levels(infotab$annee_debut) <- c(levels(infotab$annee_debut), "NA")
+infotab$annee_debut[is.na(infotab$annee_debut)] <- "NA"
+
+
 # Créer le violon plot
+pos <- c("H2019", "A2019", "H2020", "A2020", "H2021", "A2021", "H2022")
+
 vioplot(centralite ~ annee_debut, data = infotab, col = "blue")
+points(infotab$annee_debut, infotab$centralite, col = "red")
+
+
+barplot(centralite ~ formation_prealable, data = infotab, col = "blue")
 
