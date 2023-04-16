@@ -279,7 +279,16 @@ Students[115, ] <- c("charles_ferland",
 Students[65, ] <- c("marie-christine_arseneau",
                     "marie-christine",
                     "arseneau",
-                    "egaspesie_iles_de_la_madeleine",
+                    "gaspesie_iles_de_la_madeleine",
+                    "TRUE",
+                    "preuniversitaire",
+                    "A2020",
+                    "269000")
+
+Students[67, ] <- c("roxanne_bernier",
+                    "roxanne",
+                    "bernier",
+                    "estrie",
                     "TRUE",
                     "preuniversitaire",
                     "A2020",
@@ -453,7 +462,7 @@ anne<- dbGetQuery(con,requestanne)
 anne
 
 requestpasse <- "
-SELECT collaborations.etudiant1 AS Ami1, collaborations.etudiant2 AS Ami2, COUNT(*) AS nb_interaction, etudiant.formation_prealable
+SELECT collaborations.etudiant1 AS Ami1, collaborations.etudiant2 AS Ami2, COUNT(*) AS nb_interaction, etudiant.formation_prealable AS Formation_Préalable
 FROM collaborations
 FULL OUTER JOIN etudiant 
 ON collaborations.etudiant1 = etudiant.prenom_nom 
