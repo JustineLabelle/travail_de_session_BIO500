@@ -412,12 +412,12 @@ edges<- dbGetQuery(con,requestnedges)
 edges
 
 requestanne <- "
-SELECT etudiant1 AS Amis, annee_debut AS Année_début
+SELECT etudiant1 AS Ami1, etudiant2 AS Ami2, COUNT(*) AS nb_interaction, annee_debut AS Année_début
 FROM collaborations
 FULL OUTER JOIN etudiant 
 ON collaborations.etudiant1 = etudiant.prenom_nom 
 GROUP BY etudiant1
-ORDER BY nb_interaction_diff DESC
+ORDER BY nb_interaction DESC
 ;"
 anne<- dbGetQuery(con,requestanne)
 anne
