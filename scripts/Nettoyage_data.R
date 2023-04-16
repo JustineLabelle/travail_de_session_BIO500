@@ -182,6 +182,7 @@ collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, functi
   gsub("marie_burghin", "marie_bughin", x)
 }))
 
+collaborationdata_unique1 <- collaborationdata_unique1[collaborationdata_unique1$etudiant1 != collaborationdata_unique1$etudiant2, ]
 
 class(collaborationdata_unique1)
 
