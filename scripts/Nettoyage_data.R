@@ -181,6 +181,9 @@ collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, functi
 collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
   gsub("marie_burghin", "marie_bughin", x)
 }))
+collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+  gsub("madyson_mcclean", "madyson_mclean", x)
+}))
 
 collaborationdata_unique1 <- collaborationdata_unique1[collaborationdata_unique1$etudiant1 != collaborationdata_unique1$etudiant2, ]
 
@@ -223,7 +226,7 @@ row.names(etudiant)<-nomrow
 # Spécification des valeurs à supprimer
 ligness_a_supprimer <- c("216", "207", "94","23", "196", "31", "120", "67","173", "122", "195"
                          , "206", "99","68", "55", "197", "16", "133","123", "71", "208"
-                         , "72", "59","104", "117", "141", "184", "8","76", "28", "106"
+                         , "72", "59","104", "117", "141", "184", "8","76", "114", "106"
                          , "29", "211","77", "169", "107", "78", "64","209", "10", "20"
                          , "52", "80","18", "81", "82", "19", "125","61", "83", "84"
                          , "38", "124","17", "86", "12", "54", "87","26", "88", "226"
@@ -237,6 +240,14 @@ Students <- etudiant[-lignes_a_supprimer,]
 nomrow2<-seq(1,156,1)
 row.names(Students)<-nomrow2
 
+Students[17, ] <- c("kayla_trempe-kay",
+                    "kayla",
+                    "trempe_kay",
+                    "lanaudiere",
+                    "TRUE",
+                    "preuniversitaire",
+                    "A2020",
+                    "269000")
 
 Students[39, ] <- c("penelope_robert",
                     "penelope",
@@ -261,9 +272,9 @@ Students[115, ] <- c("charles_ferland",
                      "ferland",
                      "estrie",
                      "TRUE",
-                     NA,
-                     NA,
-                     NA)
+                     "preuniversitaire",
+                     "A2020",
+                     "269000")
 ##Ajouter des étudiantsqui se rerouve dans le fichier collaboration et pas dans le ficheier etudiant:
 #karim_hamzaoui, eloise_bernier, naomie_morin, gabrielle_moreault,maxence_comyn,maude_viens
 
@@ -425,7 +436,7 @@ requestanne <- "
 SELECT collaborations.etudiant1 AS Ami1, collaborations.etudiant2 AS Ami2, COUNT(*) AS nb_interaction, etudiant.annee_debut AS Année_début
 FROM collaborations
 FULL OUTER JOIN etudiant 
-ON collaborations.etudiant1 = prenom_nom 
+ON collaborations.etudiant1 = etudiant.prenom_nom 
 GROUP BY etudiant1, etudiant2
 ORDER BY nb_interaction DESC
 ;"
