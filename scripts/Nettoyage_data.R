@@ -462,27 +462,55 @@ adj_matrix <- as.matrix(get.adjacency(graph))
 
 # Ajouter les noms des étudiants comme noms de lignes et de colonnes pas certain que c'est utile
 #(binary_matrix) <- rownames(binary_matrix) <- V(graph)$name
-
 g<-graph.adjacency(adj_matrix)
-
 
 plot(g, edge.arrow.mode = 0,
      vertex.frame.color = NA, vertex.size = 3, 
-     vertex.label.cex = 0.5, layout = layout.kamada.kawai(g))
-
+     vertex.label = "", layout = layout.kamada.kawai(g))
 
 # Calculer la centralité de degré
-deg_centrality <- eigen_centrality(g)
+deg_centrality <- eigen_centrality(g)$vector
 
-# Définir une palette de couleurs pour la centralité de degré
-colors <- rev(heat.colors(max(deg_centrality)))
+node_names <- V(g)$name
+
+node_indices <- match(node_names, rownames(deg_centrality))
+node_deg_centrality <- deg_centrality[node_indices]
+
+#Création de quatres classe de degré de centralité des noeuds
+class1 <- which(node_deg_centrality < 0.25)
+class2 <- which(node_deg_centrality >= 0.25 & node_deg_centrality < 0.5)
+class3 <- which(node_deg_centrality >= 0.5 & node_deg_centrality < 0.75)
+class4 <- which(node_deg_centrality >= 0.75)
+
+# Définir une palette de couleurs pour chacune des quatres classes de degré de centralité
+
+colors <- c("yellow", "orange", "pink", "red")
+
+node_colors <- rep(colors, c(length(class1), length(class2), length(class3), length(class4)))
+
 
 # Tracer le graphique avec les couleurs de nœuds correspondantes à la centralité de degré
-plot(g, vertex.color = colors[deg_centrality], edge.arrow.mode = 0,
-     vertex.frame.color = NA, vertex.size = 4, 
-     vertex.label.cex = 0.4, layout = layout.kamada.kawai(g))
+plot(g, vertex.color = node_colors, edge.arrow.mode = 0,
+     vertex.frame.color = NA, vertex.size = 3, 
+     vertex.label = "", layout = layout.kamada.kawai(g))
+
+#Définir l'épaisseur des bords en fonction du nombre d'intéraction entre les noeuds et changer la couleur
+
+install.packages("scales")
+library(scales)
+
+edge_colors <- colorRampPalette(c("black"))(length(E(g)))
+
+edge_width <- rescale(inter$nb_interaction, to = c(0.01,1.5))
+
+E(g)$width <- edge_width
 
 
+plot(g, edge.arrow.mode = 0,vertex.frame.color = NA, vertex.size = 3, 
+     vertex.label = "", 
+     layout = layout.kamada.kawai(g), 
+     edge.width = E(g)$width,
+     edge.color = edge_colors)
 
 distances(g)
 imponoeud<-eigen_centrality(g)$vector
