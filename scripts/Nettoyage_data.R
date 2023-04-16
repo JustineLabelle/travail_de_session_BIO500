@@ -241,11 +241,11 @@ row.names(Students)<-nomrow2
 Students[39, ] <- c("penelope_robert",
                     "penelope",
                     "robert",
-                    "capitale-nationale",
-                    "VRAI",
-                    "preuniversitaire",
-                    "A2020",
-                    "269000")
+                    NA,
+                    NA,
+                    NA,
+                    NA,
+                    NA)
 
 Students[86, ] <- c("eve_dandonneau",
                     "eve",
@@ -255,6 +255,15 @@ Students[86, ] <- c("eve_dandonneau",
                     NA,
                     NA,
                     NA)
+
+Students[115, ] <- c("charles_ferland",
+                     "charles",
+                     "ferland",
+                     "estrie",
+                     "TRUE",
+                     NA,
+                     NA,
+                     NA)
 ##Ajouter des étudiantsqui se rerouve dans le fichier collaboration et pas dans le ficheier etudiant:
 #karim_hamzaoui, eloise_bernier, naomie_morin, gabrielle_moreault,maxence_comyn,maude_viens
 
@@ -413,23 +422,23 @@ edges<- dbGetQuery(con,requestnedges)
 edges
 
 requestanne <- "
-SELECT etudiant1 AS Ami1, etudiant2 AS Ami2, COUNT(*) AS nb_interaction, annee_debut AS Année_début
+SELECT collaborations.etudiant1 AS Ami1, collaborations.etudiant2 AS Ami2, COUNT(*) AS nb_interaction, etudiant.annee_debut AS Année_début
 FROM collaborations
 FULL OUTER JOIN etudiant 
-ON collaborations.etudiant1 = etudiant.prenom_nom 
-GROUP BY etudiant1
+ON collaborations.etudiant1 = prenom_nom 
+GROUP BY etudiant1, etudiant2
 ORDER BY nb_interaction DESC
 ;"
 anne<- dbGetQuery(con,requestanne)
 anne
 
 requestpasse <- "
-SELECT etudiant1 AS Ami, COUNT(*) AS nb_interaction_diff, formation_prealable AS Formation_préalable
+SELECT collaborations.etudiant1 AS Ami1, collaborations.etudiant2 AS Ami2, COUNT(*) AS nb_interaction, etudiant.formation_prealable
 FROM collaborations
 FULL OUTER JOIN etudiant 
 ON collaborations.etudiant1 = etudiant.prenom_nom 
-GROUP BY etudiant1
-ORDER BY nb_interaction_diff DESC
+GROUP BY etudiant1, etudiant2
+ORDER BY nb_interaction DESC
 ;"
 passe<- dbGetQuery(con,requestpasse)
 passe
