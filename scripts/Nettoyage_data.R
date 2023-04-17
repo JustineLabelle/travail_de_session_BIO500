@@ -502,11 +502,11 @@ ORDER BY nb_interaction DESC
 passe<- dbGetQuery(con,requestpasse)
 passe
 
-
-
-
+#---------------------------------------------------------------------------------------------------------
+##Créaction du réseau
 #cent<-dbGetQuery(con, "SELECT DISTINCT etudiant1 FROM collaborations;")
 #cent
+
 # Charger le package igraph
 library(igraph)
 
@@ -521,28 +521,44 @@ adj_matrix <- as.matrix(get.adjacency(graph))
 
 # Ajouter les noms des étudiants comme noms de lignes et de colonnes pas certain que c'est utile
 #(binary_matrix) <- rownames(binary_matrix) <- V(graph)$name
-
 g<-graph.adjacency(adj_matrix)
 
+#Définir l'épaisseur des bords en fonction du nombre d'intéraction entre les noeuds et changer la couleur
 
-plot(g, edge.arrow.mode = 0,
-     vertex.frame.color = NA, vertex.size = 3, 
-     vertex.label.cex = 0.5, layout = layout.kamada.kawai(g))
+#install.packages("scales")
+library(scales)
 
+#Définir l'épaisseur des bords en fonction du nombre d'intéraction entre les noeuds et changer la couleur pour noir
+edge_colors <- c("black")
+
+edge_width <- rescale(inter$nb_interaction, to = c(0.05,1.5))
+
+E(g)$width <- edge_width
 
 # Calculer la centralité de degré
-deg_centrality <- eigen_centrality(g)
+eigen_centrality <- eigen_centrality(g)$vector
 
-# Définir une palette de couleurs pour la centralité de degré
-colors <- rev(heat.colors(max(deg_centrality)))
+# Création de cinq classes de noeud selon leur valeur de centralité
+classes <- cut(eigen_centrality, breaks = c(0, 0.1, 0.25, 0.5, 0.75, 1), labels = c("Class 1", "Class 2", "Class 3", "Class 4", "Class 5"))
 
-# Tracer le graphique avec les couleurs de nœuds correspondantes à la centralité de degré
-plot(g, vertex.color = colors[deg_centrality], edge.arrow.mode = 0,
-     vertex.frame.color = NA, vertex.size = 4, 
-     vertex.label.cex = 0.4, layout = layout.kamada.kawai(g))
+# Définir une palette de couleurs pour chacune des classes de degré de centralité
+colors <- c("#FFCC00", "#FF9900", "#FF6600", "#FF6699", "#CC0000")
+node_colors <- colors[as.numeric(classes)]
 
+# Définir une taille de noeud pour chacune des classes de degré de centralité
+sizes <- c(2, 3, 4, 5, 6)
+node_sizes <- sizes[as.numeric(classes)]
 
+# Print le réseau selon les conditions définies
+reseau<-plot(g, edge.arrow.mode = 0,
+             vertex.label = NA, layout = layout.kamada.kawai(g),
+             vertex.shape = "circle", vertex.frame.color = "black",
+             edge.width = E(g)$width,
+             edge.color = edge_colors,
+             vertex.color = node_colors,
+             vertex.size = node_sizes)
 
+#Calculer la distance entre les noeuds
 distances(g)
 imponoeud<-eigen_centrality(g)$vector
 sort(imponoeud, decreasing = TRUE)
