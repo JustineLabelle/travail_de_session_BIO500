@@ -593,6 +593,9 @@ modularity(wtc)
 ##ajouté a etudiant karim_hamzaoui, eloise_bernier, naomie_morin, gabrielle_moreault,maxence_comyn,maude_viens
 
 
+#---------------------------
+#code pour print les graphiques au complet
+
 requestinter <- "
 SELECT etudiant1 AS Ami1, etudiant2 AS Ami2, COUNT(*) AS nb_interaction
 FROM collaborations
@@ -645,4 +648,7 @@ means <- aggregate(infotab$centralite, by = list(infotab$formation_prealable), F
 # Créer le diagramme en barres avec les moyennes de centralité
 barplot(height = means$x, names.arg = means$Group.1, col = "blue", main = "Moyenne de centralité par formation préalable", xlab = "Formation préalable", ylab = "Moyenne de centralité", ylim = c(0, 0.8))
 
+boxplot(centralite ~ region_administrative, data = infotab)
+boxplot(centralite ~ regime_coop, data = infotab)
+boxplot(centralite ~ programme, data = infotab)
 
