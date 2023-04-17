@@ -629,9 +629,8 @@ infotab$annee_debut[is.na(infotab$annee_debut)] <- "NA"
 # Créer le violon plot
 pos <- c("H2019", "A2019", "H2020", "A2020", "H2021", "A2021", "H2022")
 
-vioplot(centralite ~ annee_debut, data = infotab, col = "blue")
-points(infotab$annee_debut, infotab$centralite, col = "red")
-
+vioplot(centralite ~ annee_debut, data = infotab, col = "#CCE5FF", border= "#99CCFF", xlab= "Session de début", ylab = "Coefficient de centralité")
+points(infotab$annee_debut, infotab$centralite, col = "#3366FF")
 
 barplot(centralite ~ formation_prealable, data = infotab, col = "blue")
 
