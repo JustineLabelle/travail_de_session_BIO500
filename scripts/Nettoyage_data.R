@@ -629,8 +629,20 @@ infotab$annee_debut[is.na(infotab$annee_debut)] <- "NA"
 # Créer le violon plot
 pos <- c("H2019", "A2019", "H2020", "A2020", "H2021", "A2021", "H2022")
 
-vioplot(centralite ~ annee_debut, data = infotab, col = "#CCE5FF", border= "#99CCFF", xlab= "Session de début", ylab = "Coefficient de centralité")
+vioplot(centralite ~ annee_debut, data = infotab, col = "#CCE5FF", border= "#99CCFF", xlab= "Session de début", ylab = "Coefficient de centralité", yaxs="i")
 points(infotab$annee_debut, infotab$centralite, col = "#3366FF")
 
-barplot(centralite ~ formation_prealable, data = infotab, col = "blue")
+
+
+infotab$formation_prealable <- factor(infotab$formation_prealable)
+levels(infotab$formation_prealable) <- c(levels(infotab$formation_prealable), "NA")
+infotab$formation_prealable[is.na(infotab$formation_prealable)] <- "NA"
+
+
+# Calculer la moyenne de centralité pour chaque catégorie de formation_prealable
+means <- aggregate(infotab$centralite, by = list(infotab$formation_prealable), FUN = mean)
+
+# Créer le diagramme en barres avec les moyennes de centralité
+barplot(height = means$x, names.arg = means$Group.1, col = "blue", main = "Moyenne de centralité par formation préalable", xlab = "Formation préalable", ylab = "Moyenne de centralité", ylim = c(0, 0.8))
+
 
