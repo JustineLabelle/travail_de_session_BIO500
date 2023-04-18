@@ -503,14 +503,15 @@ passe<- dbGetQuery(con,requestpasse)
 passe
 
 #---------------------------------------------------------------------------------------------------------
-##Créaction du réseau
+##Créaction des trois figures
 #cent<-dbGetQuery(con, "SELECT DISTINCT etudiant1 FROM collaborations;")
 #cent
 
+#Création du réseau (figure 1)
 # Charger le package igraph
 library(igraph)
 
-# Créer un objet graph à partir des données de la requête SQL
+# Créer un objet graph à partir des données de la requête SQL inter
 graph <- graph.data.frame(inter, directed = TRUE)
 
 # Convertir le graph en une matrice d'adjacence
@@ -531,25 +532,26 @@ library(scales)
 #Définir l'épaisseur des bords en fonction du nombre d'intéraction entre les noeuds et changer la couleur pour noir
 edge_colors <- c("black")
 
-edge_width <- rescale(inter$nb_interaction, to = c(0.05,1.5))
+edge_width <- rescale(inter$nb_interaction, to = c(0.05,2))
 
 E(g)$width <- edge_width
 
 # Calculer la centralité de degré
-eigen_centrality <- eigen_centrality(g)$vector
+ec <- eigen_centrality(g)$vector
 
 # Création de cinq classes de noeud selon leur valeur de centralité
-classes <- cut(eigen_centrality, breaks = c(0, 0.1, 0.25, 0.5, 0.75, 1), labels = c("Class 1", "Class 2", "Class 3", "Class 4", "Class 5"))
+classes <- cut(ec, breaks = c(0, 0.1, 0.25, 0.5, 0.75, 1), labels = c("Class 1", "Class 2", "Class 3", "Class 4", "Class 5"))
 
 # Définir une palette de couleurs pour chacune des classes de degré de centralité
-colors <- c("#FFCC00", "#FF9900", "#FF6600", "#FF6699", "#CC0000")
-node_colors <- colors[as.numeric(classes)]
+colors_res <- c("#FFCC00", "#FF9900", "#FF6600", "#FF6699", "#CC0000")
+node_colors <- colors_res[as.numeric(classes)]
 
 # Définir une taille de noeud pour chacune des classes de degré de centralité
 sizes <- c(2, 3, 4, 5, 6)
 node_sizes <- sizes[as.numeric(classes)]
 
 # Print le réseau selon les conditions définies
+par(mfrow=c(1,1), mar=c(1.5, 1.5, 1.5, 1.5))
 reseau<-plot(g, edge.arrow.mode = 0,
              vertex.label = NA, layout = layout.kamada.kawai(g),
              vertex.shape = "circle", vertex.frame.color = "black",
@@ -557,11 +559,11 @@ reseau<-plot(g, edge.arrow.mode = 0,
              edge.color = edge_colors,
              vertex.color = node_colors,
              vertex.size = node_sizes)
+mtext("Figure 1 : Réseau de collaborations des étudiants du cours BIO500 à l'hiver 2023.", side = 1, line = 4, col = "black", font = 2, cex = 0.6, adj = 0, padj = -10)
 
 #Calculer la distance entre les noeuds
 distances(g)
-imponoeud<-eigen_centrality(g)$vector
-sort(imponoeud, decreasing = TRUE)
+sort(ec, decreasing = TRUE)
 wtc <- walktrap.community(g)
 
 # Calcule la modularité à partir des communautés
@@ -572,83 +574,38 @@ clique_size_counts(g)
 clique_num(g)
 max_cliques(g)
 
-#centralité du reseau
-eigen_centrality(g)$vector
-
-# Évalue la présence communautés dans le graphe
-wtc = walktrap.community(g)
-# Calcule la modularité à partir des communautés
-modularity(wtc)
-
-#colnames(cent)<-"prenom_nom"
-#cente<-data.frame(etudiant[,1])
-#colnames(cente)<-"prenom_nom"
-
-#extra_ids <- setdiff(cent,cente)
-#extra_ids
-
-#extra_idss <- setdiff(cente,cent)
-#extra_idss 
-
-##ajouté a etudiant karim_hamzaoui, eloise_bernier, naomie_morin, gabrielle_moreault,maxence_comyn,maude_viens
-
-
-#---------------------------
-#code pour print les graphiques au complet
-
-requestinter <- "
-SELECT etudiant1 AS Ami1, etudiant2 AS Ami2, COUNT(*) AS nb_interaction
-FROM collaborations
-GROUP BY etudiant1, etudiant2
-ORDER BY nb_interaction DESC
-;"
-inter<- dbGetQuery(con,requestinter)
-inter
-
-# Créer un objet graph à partir des données de la requête SQL
-graph <- graph.data.frame(inter, directed = TRUE)
-
-# Convertir le graph en une matrice d'adjacence
-adj_matrix <- as.matrix(get.adjacency(graph))
-
-g<-graph.adjacency(adj_matrix)
-
-ec <- eigen_centrality(g)$vector
+#Création du violon plot de la centralité selon la session de dénut de programme (figure 2)
 
 centrality_df <- data.frame(nom = names(ec), centralite = ec)
 
-
 infotab <- merge(etudiant, centrality_df, by.x = "prenom_nom", by.y = "nom")
-
-
 
 library(vioplot)
 
-infotab$annee_debut <- factor(infotab$annee_debut)
-levels(infotab$annee_debut) <- c(levels(infotab$annee_debut), "NA")
+infotab$annee_debut <- factor(infotab$annee_debut, levels = c("H2019", "A2019", "H2020", "A2020", "E2021", "A2021", "H2022","A2022", "NA"))
 infotab$annee_debut[is.na(infotab$annee_debut)] <- "NA"
 
-
-# Créer le violon plot
-pos <- c("H2019", "A2019", "H2020", "A2020", "H2021", "A2021", "H2022")
-
-vioplot(centralite ~ annee_debut, data = infotab, col = "#CCE5FF", border= "#99CCFF", xlab= "Session de début", ylab = "Coefficient de centralité", yaxs="i")
+par(mfrow=c(1,1), mar=c(8, 4, 4, 3))
+vioplot(centralite ~ annee_debut, data = infotab, col = "#CCE5FF", border= "#99CCFF", xlab= "Session de début", ylab = "Coefficient de centralité", yaxs="i", cex.lab = 1, cex.axis = 0.7)
 points(infotab$annee_debut, infotab$centralite, col = "#3366FF")
+mtext("Figure 2 : Distribution de la centralité selon la session de début de programme.", side = 1, line = 4, col = "black", font = 2, cex = 0.7, adj = 0, padj = 2)
 
-
+##création du barplot de la moyenne de la centrallité selon la formation préalable (figure 3)
 
 infotab$formation_prealable <- factor(infotab$formation_prealable)
 levels(infotab$formation_prealable) <- c(levels(infotab$formation_prealable), "NA")
 infotab$formation_prealable[is.na(infotab$formation_prealable)] <- "NA"
 
-
-# Calculer la moyenne de centralité pour chaque catégorie de formation_prealable
+# Calculer la moyenne de centralité et l'écart type pour chaque catégorie de formation_prealable
 means <- aggregate(infotab$centralite, by = list(infotab$formation_prealable), FUN = mean)
+sd <- aggregate(infotab$centralite, by = list(infotab$formation_prealable), FUN = sd)
 
 # Créer le diagramme en barres avec les moyennes de centralité
-barplot(height = means$x, names.arg = means$Group.1, col = "blue", main = "Moyenne de centralité par formation préalable", xlab = "Formation préalable", ylab = "Moyenne de centralité", ylim = c(0, 0.8))
 
-boxplot(centralite ~ region_administrative, data = infotab)
-boxplot(centralite ~ regime_coop, data = infotab)
-boxplot(centralite ~ programme, data = infotab)
+colors_bar <- colorRampPalette(c("#009966", "#0072B2", "#D55E00", "#CC79A7"))
+
+par(mfrow=c(1,1), mar=c(8, 4, 4, 3))
+barplot(height = means$x, names.arg = means$Group.1, col = colors_bar(length(means$x)), xlab = "Formation préalable", ylab = "Moyenne de centralité", ylim= c(0,1))
+arrows(x0=barplot(height = means$x, plot=FALSE), y0=means$x-sd$x, x1=barplot(height = means$x, plot=FALSE), y1=means$x+sd$x, angle=90, code=3, length=0.1)
+mtext("Figure 3 : Moyenne de centralité par formation préalable.", side = 1, line = 4, col = "black", font = 2, cex = 1, adj = 0, padj = 2)
 
