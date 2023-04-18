@@ -1,20 +1,20 @@
 etudiant<- function(rawdatatarget) {
 
-  list2env(list_etudiant, envir = .GlobalEnv)
+
   
   ##changer le seul nom de colonne différent des autres pour Étudiant
   
-  names(etudiantdata4)[names(etudiantdata4) == "prenom_nom."] <- "prenom_nom"
+  names(rawdatatarget$etudiantdata4)[names(rawdatatarget$etudiantdata4) == "prenom_nom."] <- "prenom_nom"
   
   #Utiliser subset pour selectionner seulememnt les colonnes interessante
   
-  etudiantdata3 <- subset(etudiantdata3,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
-  etudiantdata4 <- subset(etudiantdata4,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
-  etudiantdata9 <- subset(etudiantdata9,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
-  etudiantdata7 <- subset(etudiantdata7,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
+  rawdatatarget$etudiantdata3 <- subset(rawdatatarget$etudiantdata3,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
+  rawdatatarget$etudiantdata4 <- subset(rawdatatarget$etudiantdata4,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
+  rawdatatarget$etudiantdata9 <- subset(rawdatatarget$etudiantdata9,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
+  rawdatatarget$etudiantdata7 <- subset(rawdatatarget$etudiantdata7,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
   
   #on unie les tableaux
-  etudiantdata<- rbind(etudiantdata1,etudiantdata2,etudiantdata3,etudiantdata4,etudiantdata5,etudiantdata6,etudiantdata7,etudiantdata8,etudiantdata9,etudiantdata10)
+  etudiantdata<- rbind(rawdatatarget$etudiantdata1,rawdatatarget$etudiantdata2,rawdatatarget$etudiantdata3,rawdatatarget$etudiantdata4,rawdatatarget$etudiantdata5,rawdatatarget$etudiantdata6,rawdatatarget$etudiantdata7,rawdatatarget$etudiantdata8,rawdatatarget$etudiantdata9,rawdatatarget$etudiantdata10)
   
   
   #Enlever les lignes qui nous interesse pas pour la table étudiant
@@ -86,6 +86,17 @@ etudiant<- function(rawdatatarget) {
   
   # Écriture de la table filtrée dans un nouveau fichier
   pathe<- file.path("data","clean","clean_etudiant.csv")
-  write.csv(Students,pathe, row.names = F,col.names = T)
-  clean_etudiant <<- Students
+  write.csv(Students,pathe, row.names = F)
+  rm(list = ls())
+  
+  pathe<- file.path("data","clean","clean_etudiant.csv")
+  etudiant<<-read.csv(file= pathe,sep = ",")
+  rm(pathe)
+  
+  library(RSQLite)
+  con <- dbConnect(SQLite(), dbname="reseau.db")
+  dbWriteTable(con, append = TRUE, name = "etudiant", value = etudiant, row.names = FALSE)
+  rm(con)
+  
+  return(etudiant)
   }

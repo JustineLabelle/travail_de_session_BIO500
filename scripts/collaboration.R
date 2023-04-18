@@ -1,10 +1,11 @@
-collaboration <- function(rawdata) {
+collaboration <- function(rawdatatarget) {
+  
   #Utiliser subset pour selectionner seulememnt les colonnes interessante
   
-  collaborationdata7 <- subset(collaborationdata7,select = c("etudiant1","etudiant2","sigle","session"))
+  rawdatatarget$collaborationdata7 <- subset(rawdatatarget$collaborationdata7,select = c("etudiant1","etudiant2","sigle","session"))
   
   #on unie les tableaux
-  collaborationdata<- rbind(collaborationdata1,collaborationdata2,collaborationdata3,collaborationdata4,collaborationdata5,collaborationdata6,collaborationdata7,collaborationdata8,collaborationdata9,collaborationdata10)
+  collaborationdata<- rbind(rawdatatarget$collaborationdata1,rawdatatarget$collaborationdata2,rawdatatarget$collaborationdata3,rawdatatarget$collaborationdata4,rawdatatarget$collaborationdata5,rawdatatarget$collaborationdata6,rawdatatarget$collaborationdata7,rawdatatarget$collaborationdata8,rawdatatarget$collaborationdata9,rawdatatarget$collaborationdata10)
   
   #pour enlever les lignes doublons
   
@@ -141,8 +142,21 @@ collaboration <- function(rawdata) {
   
   # Écriture de la table filtrée dans un nouveau fichier
   pathcoll<- file.path("data","clean","clean_collaboration.csv")
-  write.csv(collaborationdata_unique1, pathcoll, row.names = F,col.names = T)
-  clean_collaborations <<- collaborationdata_unique1
+  write.csv(collaborationdata_unique1, pathcoll, row.names = F)
+  rm(list = ls())
+  
+  pathcoll<- file.path("data","clean","clean_collaboration.csv")
+  collaborations<-read.csv(file= pathcoll,sep = ",")
+  rm(pathcoll)
+  
+  library(RSQLite)
+  con <- dbConnect(SQLite(), dbname="reseau.db")
+  dbWriteTable(con, append = TRUE, name = "collaborations", value = collaborations, row.names = FALSE)
+  rm(con)
+  
+  
+  return(collaborations)
   }
+
 
 

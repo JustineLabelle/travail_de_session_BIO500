@@ -1,17 +1,19 @@
-cour <- function(rawdata) {
+cour <- function(rawdatatarget) {
+  
+  
 
   #Utiliser subset pour selectionner seulememnt les colonnes interessante
   
-  courdata5 <- subset(courdata5,select = c("sigle","optionnel","credits"))
-  courdata7 <- subset(courdata7,select = c("sigle","optionnel","credits"))
+  rawdatatarget$courdata5 <- subset(rawdatatarget$courdata5,select = c("sigle","optionnel","credits"))
+  rawdatatarget$courdata7 <- subset(rawdatatarget$courdata7,select = c("sigle","optionnel","credits"))
   
   
   ##changer le seul nom de colonne différent des autres pour cours
-  names(courdata4)[names(courdata4) == "ï..sigle"] <- "sigle"
+  names(rawdatatarget$courdata4)[names(rawdatatarget$courdata4) == "ï..sigle"] <- "sigle"
   
   
   #on unie les tableaux
-  courdata<- rbind(courdata1,courdata2,courdata3,courdata4,courdata5,courdata6,courdata7,courdata8,courdata9,courdata10)
+  courdata<- rbind(rawdatatarget$courdata1,rawdatatarget$courdata2,rawdatatarget$courdata3,rawdatatarget$courdata4,rawdatatarget$courdata5,rawdatatarget$courdata6,rawdatatarget$courdata7,rawdatatarget$courdata8,rawdatatarget$courdata9,rawdatatarget$courdata10)
   
   
   #pour enlever les lignes doublons
@@ -50,8 +52,21 @@ cour <- function(rawdata) {
   
   # Écriture de la table filtrée dans un nouveau fichier
   pathcour<- file.path("data","clean","clean_cour.csv")
-  write.csv(cour_clean, pathcour,row.names = F,col.names = T)
-  clean_cour <<- cour_clean
+  write.csv(cour_clean, pathcour,row.names = F)
+  rm(list = ls())
+  
+  pathcour<- file.path("data","clean","clean_cour.csv")
+  cour<-read.csv(file= pathcour,sep = ",")
+  rm(pathcour)
+  
+  
+  library(RSQLite)
+  con <- dbConnect(SQLite(), dbname="reseau.db")
+  dbWriteTable(con, append = TRUE, name = "cours", value = cours, row.names = FALSE)
+  rm(con)
+  
+  return(cour)
 }
+
 
 

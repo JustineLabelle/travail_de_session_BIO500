@@ -19,8 +19,8 @@ abstract: |
   Please provide an abstract of no more than 250 words in a single paragraph. Abstracts should explain to the general reader the major contributions of the article. References in the abstract must be cited in full within the abstract itself and cited in the text.
 
 keywords:
-  - one
-  - two
+  - Réseau écologique
+  - Centralité
   - optional
   - optional
   - optional
@@ -37,15 +37,19 @@ lineno: false
 output: rticles::pnas_article
 ---
 
-# Introduction {.unnumbered}
+# Introduction
 
-# Méthode {.unnumbered}
+# Méthode
 
-# Résultats {.unnumbered}
+## Échantillonnage
 
-# Discussion {.unnumbered}
+## Traitement et analyse des données
 
-# Conclusion {.unnumbered}
+# Résultats 
+
+# Discussion 
+
+# Conclusion 
 
 # Bibliographie {.unnumbered}
 
