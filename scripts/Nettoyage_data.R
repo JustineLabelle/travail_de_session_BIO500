@@ -551,7 +551,8 @@ sizes <- c(2, 3, 4, 5, 6)
 node_sizes <- sizes[as.numeric(classes)]
 
 # Print le réseau selon les conditions définies
-par(mfrow=c(1,1), mar=c(1.5, 1.5, 1.5, 1.5))
+#1.5, 1.5, 1.5, 1.5
+#par(mfrow=c(1,1), mar=c(1.5, 1.5, 1.5, 1.5))
 reseau<-plot(g, edge.arrow.mode = 0,
              vertex.label = NA, layout = layout.kamada.kawai(g),
              vertex.shape = "circle", vertex.frame.color = "black",
@@ -559,6 +560,9 @@ reseau<-plot(g, edge.arrow.mode = 0,
              edge.color = edge_colors,
              vertex.color = node_colors,
              vertex.size = node_sizes)
+
+legend(x = "right", y = "top", legend = c("Classe 1 : Faible centralité", "Classe 2", "Classe 3", "Classe 4", "Classe 5 : Forte centralité"), col = colors_res, pch = 16, cex = sizes, bty = "n",x.intersp = 0.5, y.intersp = 0.5)
+
 mtext("Figure 1 : Réseau de collaborations des étudiants du cours BIO500 à l'hiver 2023.", side = 1, line = 4, col = "black", font = 2, cex = 0.6, adj = 0, padj = -10)
 
 #Calculer la distance entre les noeuds
