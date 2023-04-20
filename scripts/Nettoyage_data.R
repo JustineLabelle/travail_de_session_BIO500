@@ -578,14 +578,10 @@ classes <- cut(ec, breaks = c(0, 0.1, 0.25, 0.5, 0.75, 1), labels = c("Class 1",
 
 # Définir une palette de couleurs pour chacune des classes de degré de centralité
 colors_res <- c("#FFCC00", "#FF9900", "#FF6600", "#FF6699", "#CC0000")
-
-#définir les couleurs selon les classes
 node_colors <- colors_res[as.numeric(classes)]
 
 # Définir une taille de noeud pour chacune des classes de degré de centralité
 sizes <- c(2, 3, 4, 5, 6)
-
-#définir les tailles des points selon les classe de centralité
 node_sizes <- sizes[as.numeric(classes)]
 
 # Print le réseau selon les conditions définies
@@ -601,7 +597,7 @@ reseau<-plot(g, edge.arrow.mode = 0,
 
 
 #mettre une légende pour les couleurs selon les classes
-legend(x = "right", y = "top", legend = c("Classe 1 : Faible centralité", "Classe 2", "Classe 3", "Classe 4", "Classe 5 : Forte centralité"), col = colors_res, pch = 16, cex = 0.7, bty = "n",x.intersp = 0.5, y.intersp = 0.5)
+legend(x = "right", y = "top", legend = c("Classe 1 : Faible centralité", "Classe 2", "Classe 3", "Classe 4", "Classe 5 : Forte centralité"), col = colors_res, pch = 16, cex = sizes, bty = "n",x.intersp = 0.5, y.intersp = 0.5)
 #mettre un titre au réseau
 mtext("Figure 1 : Réseau de collaborations des étudiants du cours BIO500 à l'hiver 2023.", side = 1, line = 4, col = "black", font = 2, cex = 0.6, adj = 0, padj = -10)
 
