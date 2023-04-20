@@ -613,3 +613,4 @@ barplot(height = means$x, names.arg = means$Group.1, col = colors_bar(length(mea
 arrows(x0=barplot(height = means$x, plot=FALSE), y0=means$x-sd$x, x1=barplot(height = means$x, plot=FALSE), y1=means$x+sd$x, angle=90, code=3, length=0.1)
 mtext("Figure 3 : Moyenne de centralité par formation préalable.", side = 1, line = 4, col = "black", font = 2, cex = 1, adj = 0, padj = 2)
 
+#essaie
