@@ -21,7 +21,7 @@ abstract: |
 keywords:
   - Réseau écologique
   - Centralité
-  - optional
+  - Interaction
   - optional
   - optional
 
@@ -43,11 +43,6 @@ Les écologistes ont comme pratique l'étude des interactions entre les espèces
 
 # Méthode
 
-```{r}
-c<- seq(1,5, by=1)
-c
-```
-
 ## Échantillonnage
 
 Durant l'hiver 2023, les étudiants du cours de BIO500 ont été divisés en 10 équipes de 4 personnes. Chaque équipe a complété trois fichiers csv concernant les cours auxquels ils ont réalisé des travaux d'équipes au courant de leur baccalauréat. Le premier fichier permet identifier les collaborations effectuées, c'est-à-dire les liens d'interactions avec leurs différents coéquipiers en fonction du cours. Le deuxième fichier représente des informations relatives aux étudiants de l'équipe. Plus spécifiquement, leur région administrative, leur participation au régime coopératif, leur année de début du baccalauréat, leur formation préalable et leur numéro du programme. Puis, le dernier identifie les cours dans lesquels des travaux ont été réalisés et d'autres données pertinentes.
@@ -57,6 +52,57 @@ Durant l'hiver 2023, les étudiants du cours de BIO500 ont été divisés en 10 
 Une fois la compilation des données réalisée par chaque équipe, les données ont été partagées à l'ensemble du groupe et celles-ci ont été fusionnées à l'aide du logiciel R sous forme de trois fichiers csv. Par la suite, les données des différents fichiers ont été nettoyées et standardisées afin d'obtenir une conformité au sein des différentes tables. Ces données ont ensuite été injectées à l'aide du logiciel R dans le système de gestion de données SQLite3. Ce système nous a permis d'extraire les données d'intérêt via des requêtes qui sont nécessaires à la création des figures. Il est à noter que ce n'est pas toutes les données qui ont été utilisées lors des analyses. Les représentations visuelles du réseau d'interaction, ainsi que la centralité ont été effectuées grâce au package "Igraph" du locigiel R. Le package "Vioplot" du locigiel R a aussi été utilisé pour la création du diagramme en violon. Ensuite, le package "targets" a été utilisé afin d'automatiser l'ensemble du processus et d'augmenter la reproductibilité de cette étude. Finalement, le gabarit PNAS dans Rmarkdown a été utilisé grâce au package " Rticles ".
 
 # Résultats
+
+```{r fig:plot1, echo=FALSE, fig.cap="\\label{fig:plot1}Légende figure.", fig.align='center', out.width='70%'}
+
+#charger le package vioplot
+library(vioplot)
+
+#definir les classe des années de début 
+infotab$annee_debut <- factor(infotab$annee_debut, levels = c("H2019", "A2019", "H2020", "A2020", "E2021", "A2021", "H2022","A2022", "NA"))
+#Faire en sorte que les données absente soit observer dans les figures
+infotab$annee_debut[is.na(infotab$annee_debut)] <- "NA"
+# faire le violin plot
+par(mfrow=c(1,1), mar=c(8, 4, 4, 3))
+vioplot(centralite ~ annee_debut, data = infotab, col = "#CCE5FF", border= "#99CCFF", xlab= "Session de début", ylab = "Coefficient de centralité", yaxs="i", cex.lab = 1, cex.axis = 0.7)
+#mettre les points dans la figure
+points(infotab$annee_debut, infotab$centralite, col = "#3366FF")
+#mettre un titre à la figure
+mtext("Figure 2 : Distribution de la centralité selon la session de début de programme.", side = 1, line = 4, col = "black", font = 2, cex = 0.7, adj = 0, padj = 2)
+
+
+
+
+```
+
+```{r fig:plot1, echo=FALSE, fig.cap="\\label{fig:plot1}Légende figure.", fig.align='center', out.width='70%'}
+
+##création du barplot de la moyenne de la centrallité selon la formation préalable (figure 3)
+
+# Faire en sorte que le bareplot prennes aussi les NA dans la figure
+infotab$formation_prealable <- factor(infotab$formation_prealable)
+levels(infotab$formation_prealable) <- c(levels(infotab$formation_prealable), "NA")
+infotab$formation_prealable[is.na(infotab$formation_prealable)] <- "NA"
+
+# Calculer la moyenne de centralité et l'écart type pour chaque catégorie de formation_prealable
+means <- aggregate(infotab$centralite, by = list(infotab$formation_prealable), FUN = mean)
+sd <- aggregate(infotab$centralite, by = list(infotab$formation_prealable), FUN = sd)
+
+
+# Definir les couleurs selon les formations préalable
+colors_bar <- colorRampPalette(c("#009966", "#0072B2", "#D55E00", "#CC79A7"))
+
+# Créer le diagramme en barres avec les moyennes de centralité
+par(mfrow=c(1,1), mar=c(8, 4, 4, 3))
+barplot(height = means$x, names.arg = means$Group.1, col = colors_bar(length(means$x)), xlab = "Formation préalable", ylab = "Moyenne de centralité", ylim= c(0,1))
+
+#mettre les bandes d'écart type
+arrows(x0=barplot(height = means$x, plot=FALSE), y0=means$x-sd$x, x1=barplot(height = means$x, plot=FALSE), y1=means$x+sd$x, angle=90, code=3, length=0.1)
+#mettre un titre à la figure
+mtext("Figure 3 : Moyenne de centralité par formation préalable.", side = 1, line = 4, col = "black", font = 2, cex = 1, adj = 0, padj = 2)
+
+
+```
 
 # Discussion
 
