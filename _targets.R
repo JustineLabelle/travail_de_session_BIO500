@@ -7,8 +7,9 @@ source ("scripts/cour.R")
 source ("scripts/etudiant.R")
 source ("scripts/manipulations.R")
 source("scripts/roquaite.R")
-source("scripts/figurer.R")
-
+source("scripts/figurer1.R")
+source("scripts/figurer2.R")
+source("scripts/figurer3.R")
 
 
 list(
@@ -42,8 +43,12 @@ list(
   command = roquaite(),
   ),
   tar_target(
-    name = figures, # Cible pour l'exécution de la figure
+    name = figure, # Cible pour l'exécution de la figure
     command = figurer(requete),
+  ),
+  tar_render(
+    name = rapport,
+    path ="rapport/rapport.Rmd",
   ))
 
 
