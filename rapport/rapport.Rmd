@@ -55,6 +55,11 @@ Une fois la compilation des données réalisée par chaque équipe, les données
 
 ```{r fig:plot1, echo=FALSE, fig.cap="\\label{fig:plot1}Légende figure.", fig.align='center', out.width='70%'}
 
+figure<-tar_read(figure)
+infotab<-figure[[1]]
+
+
+
 #charger le package vioplot
 library(vioplot)
 
@@ -75,9 +80,13 @@ mtext("Figure 2 : Distribution de la centralité selon la session de début de p
 
 ```
 
-```{r fig:plot1, echo=FALSE, fig.cap="\\label{fig:plot1}Légende figure.", fig.align='center', out.width='70%'}
+```{r fig:plot2, echo=FALSE, fig.cap="\\label{fig:plot2}Légende figure.", fig.align='center', out.width='70%'}
 
-##création du barplot de la moyenne de la centrallité selon la formation préalable (figure 3)
+figure<-tar_read(figure)
+infotab<-figure[[1]]
+
+
+##création du barplot de la moyenne de la centralité selon la formation préalable (figure 3)
 
 # Faire en sorte que le bareplot prennes aussi les NA dans la figure
 infotab$formation_prealable <- factor(infotab$formation_prealable)

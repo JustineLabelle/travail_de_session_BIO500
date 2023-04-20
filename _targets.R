@@ -3,14 +3,17 @@ library(tarchetypes)
 
 source("scripts/rawdata.R")
 source("scripts/collaboration.R")
-source ("scripts/cour.R")
-source ("scripts/etudiant.R")
-source ("scripts/manipulations.R")
+source("scripts/cour.R")
+source("scripts/etudiant.R")
+source("scripts/manipulations.R")
 source("scripts/roquaite.R")
-source("scripts/figurer1.R")
-source("scripts/figurer2.R")
-source("scripts/figurer3.R")
+source("scripts/figurer.R")
+source("rapport/rapport.Rmd")
+#source("scripts/figurer1.R")
+#source("scripts/figurer2.R")
+#source("scripts/figurer3.R")
 
+tar_option_set(packages = c("rmarkdown","knitr","stringr","RSQLite","vioplot","igraph","scales"))
 
 list(
   tar_target(
