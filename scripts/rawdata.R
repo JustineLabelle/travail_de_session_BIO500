@@ -29,15 +29,6 @@ rawdata <- function(file_paths) {
       
     }
   }
-  #list_etudiant <<- list(etudiantdata1,etudiantdata10,etudiantdata2,etudiantdata3,etudiantdata4,etudiantdata5,etudiantdata6,etudiantdata7,etudiantdata8,etudiantdata9)
-  #list_etudiant <<- setNames(list_etudiant, c("etudiantdata1","etudiantdata10","etudiantdata2","etudiantdata3","etudiantdata4","etudiantdata5","etudiantdata6","etudiantdata7","etudiantdata8","etudiantdata9"))
-  
-  #list_cour <<- list(courdata1,courdata10,courdata2,courdata3,courdata4,courdata5,courdata6,courdata7,courdata8,courdata9)
-  #list_cour <<- setNames(list_cour, c("courdata1","courdata10","courdata2","courdata3","courdata4","courdata5","courdata6","courdata7","courdata8","courdata9"))
-  
-  #list_collaboration <<- list(collaborationdata1,collaborationdata10,collaborationdata2,collaborationdata3,collaborationdata4,collaborationdata5,collaborationdata6,collaborationdata7,collaborationdata8,collaborationdata9)
-  #list_collaboration <<- setNames(list_collaboration, c("collaborationdata1","collaborationdata10","collaborationdata2","collaborationdata3","collaborationdata4","collaborationdata5","collaborationdata6","collaborationdata7","collaborationdata8","collaborationdata9"))
-  
   master_list <<-list(collaborationdata1,collaborationdata10,collaborationdata2,collaborationdata3,collaborationdata4,collaborationdata5,collaborationdata6,collaborationdata7,collaborationdata8,collaborationdata9,courdata1,courdata10,courdata2,courdata3,courdata4,courdata5,courdata6,courdata7,courdata8,courdata9,etudiantdata1,etudiantdata10,etudiantdata2,etudiantdata3,etudiantdata4,etudiantdata5,etudiantdata6,etudiantdata7,etudiantdata8,etudiantdata9)
   
   master_list <<-setNames(master_list, c("collaborationdata1","collaborationdata10","collaborationdata2","collaborationdata3","collaborationdata4","collaborationdata5","collaborationdata6","collaborationdata7","collaborationdata8","collaborationdata9","courdata1","courdata10","courdata2","courdata3","courdata4","courdata5","courdata6","courdata7","courdata8","courdata9","etudiantdata1","etudiantdata10","etudiantdata2","etudiantdata3","etudiantdata4","etudiantdata5","etudiantdata6","etudiantdata7","etudiantdata8","etudiantdata9"))
@@ -45,9 +36,7 @@ rawdata <- function(file_paths) {
   # nettoyer des objets temporaires utilisé dans la boucle
   rm(list = c('allFiles', 'tab', 'tabFiles', 'tabName', 'ficher', 'groupe',"L","nbGroupe","separateur","tabNames"))
   rm(list=c("collaborationdata1","collaborationdata10","collaborationdata2","collaborationdata3","collaborationdata4","collaborationdata5","collaborationdata6","collaborationdata7","collaborationdata8","collaborationdata9","etudiantdata1","etudiantdata10","etudiantdata2","etudiantdata3","etudiantdata4","etudiantdata5","etudiantdata6","etudiantdata7","etudiantdata8","etudiantdata9","courdata1","courdata10","courdata2","courdata3","courdata4","courdata5","courdata6","courdata7","courdata8","courdata9"))
-  #return(list_etudiant)
-  #return(list_cour)
-  #return(list_collaboration)
   return(master_list)
+  
 }
 

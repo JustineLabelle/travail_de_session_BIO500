@@ -67,6 +67,7 @@ cour <- function(rawdatatarget) {
   rm(con)
   
   return(cour)
+  
 }
 
 

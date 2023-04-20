@@ -21,8 +21,10 @@ roquaite<- function(){
   #créer un dataframe avec la requète sortircol
   resultat<-dbGetQuery(con,sortircol)
   resultat
-  listrequete<-list(inter, resultat)
+  requete<-list(inter, resultat)
   
   rm(con,inter,resultat,requestinter,sortircol)
-  return(listrequete)
+  return(requete)
+  
+  
 }

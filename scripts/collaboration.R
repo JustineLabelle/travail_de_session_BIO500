@@ -162,6 +162,7 @@ collaboration <- function(rawdatatarget) {
   
   
   return(collaborations)
+  
   }
 
 

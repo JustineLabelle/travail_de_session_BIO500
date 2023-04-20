@@ -6,7 +6,10 @@ source("scripts/collaboration.R")
 source ("scripts/cour.R")
 source ("scripts/etudiant.R")
 source ("scripts/manipulations.R")
-#source ("scripts/typeind.R")
+source("scripts/roquaite.R")
+source("scripts/figurer.R")
+
+
 
 list(
   tar_target(
