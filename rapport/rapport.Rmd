@@ -39,21 +39,30 @@ output: rticles::pnas_article
 
 # Introduction
 
+Les écologistes ont comme pratique l'étude des interactions entre les espèces qui peut être traduite et analysée à l'aide de réseaux écologiques. Les différentes propriétés de ces réseaux peuvent fournir des indications sur l'organisation des processus écologiques, mais aussi sur la résilience du réseau face aux changements et aux perturbations @delmas2019analysing. L'étude des réseaux écologique peut se faire autant à l'échelle des écosystèmes qu'au niveau des espèces. Dans le dernier cas, ils permettent d'observer le rôle et l'importance de celles-ci à travers leurs interactions au sein du réseau @delmas2019analysing. Plusieurs facteurs peuvent influencer ces interactions tels que l'abondance locale des espèces, leurs traits ainsi que les conditions environnementales @delmas2019analysing. En tant qu'écologistes si bien formés par l'Université de Sherbrooke, nous avons tenté de déterminer si les propriétés d'un réseau écologique sont similaires à ceux d'un réseau d'interactions entre les étudiants du cours BIO500 à l'hiver 2023. Au cours de leur parcours universitaire, les étudiants ont été confrontés à réaliser de nombreux travaux d'équipes qui représentent des collaborations avec différents individus. Ces collaborations permettent d'analyser les interactions entre les étudiants et les facteurs qui peuvent les influencer. L'objectif est donc d'observer l'importance des étudiants au sein du réseau de collaboration à l'aide de la centralité, mais aussi de comprendre comment l'année du début du baccalauréat et la formation préalable influencent cette centralité.
+
 # Méthode
+
+```{r}
+c<- seq(1,5, by=1)
+c
+```
 
 ## Échantillonnage
 
+Durant l'hiver 2023, les étudiants du cours de BIO500 ont été divisés en 10 équipes de 4 personnes. Chaque équipe a complété trois fichiers csv concernant les cours auxquels ils ont réalisé des travaux d'équipes au courant de leur baccalauréat. Le premier fichier permet identifier les collaborations effectuées, c'est-à-dire les liens d'interactions avec leurs différents coéquipiers en fonction du cours. Le deuxième fichier représente des informations relatives aux étudiants de l'équipe. Plus spécifiquement, leur région administrative, leur participation au régime coopératif, leur année de début du baccalauréat, leur formation préalable et leur numéro du programme. Puis, le dernier identifie les cours dans lesquels des travaux ont été réalisés et d'autres données pertinentes.
+
 ## Traitement et analyse des données
 
-# Résultats 
+Une fois la compilation des données réalisée par chaque équipe, les données ont été partagées à l'ensemble du groupe et celles-ci ont été fusionnées à l'aide du logiciel R sous forme de trois fichiers csv. Par la suite, les données des différents fichiers ont été nettoyées et standardisées afin d'obtenir une conformité au sein des différentes tables. Ces données ont ensuite été injectées à l'aide du logiciel R dans le système de gestion de données SQLite3. Ce système nous a permis d'extraire les données d'intérêt via des requêtes qui sont nécessaires à la création des figures. Il est à noter que ce n'est pas toutes les données qui ont été utilisées lors des analyses. Les représentations visuelles du réseau d'interaction, ainsi que la centralité ont été effectuées grâce au package "Igraph" du locigiel R. Le package "Vioplot" du locigiel R a aussi été utilisé pour la création du diagramme en violon. Ensuite, le package "targets" a été utilisé afin d'automatiser l'ensemble du processus et d'augmenter la reproductibilité de cette étude. Finalement, le gabarit PNAS dans Rmarkdown a été utilisé grâce au package " Rticles ".
 
-# Discussion 
+# Résultats
 
-# Conclusion 
+# Discussion
+
+# Conclusion
 
 # Bibliographie {.unnumbered}
-
-References should be cited in numerical order as they appear in text; this will be done automatically via bibtex, e.g. @belkin2002using and [@berard1994embedding; @coifman2005geometric]. All references, including for the SI, should be included in the main manuscript file. References appearing in both sections should not be duplicated. SI references included in tables should be included with the main reference section
 
 <!-- Leave these lines as they are at the end of your .Rmd file to ensure placement of methods & acknowledgements sections before the references-->
 
