@@ -584,6 +584,7 @@ node_colors <- colors_res[as.numeric(classes)]
 sizes <- c(2, 3, 4, 5, 6)
 node_sizes <- sizes[as.numeric(classes)]
 
+png("figures/figure1.png")
 # Print le réseau selon les conditions définies
 #1.5, 1.5, 1.5, 1.5
 #par(mfrow=c(1,1), mar=c(1.5, 1.5, 1.5, 1.5))
@@ -594,7 +595,8 @@ reseau<-plot(g, edge.arrow.mode = 0,
              edge.color = edge_colors,
              vertex.color = node_colors,
              vertex.size = node_sizes)
-
+# Fermer le fichier PNG
+dev.off()
 
 #mettre une légende pour les couleurs selon les classes
 legend(x = "right", y = "top", legend = c("Classe 1 : Faible centralité", "Classe 2", "Classe 3", "Classe 4", "Classe 5 : Forte centralité"), col = colors_res, pch = 16, cex = sizes, bty = "n",x.intersp = 0.5, y.intersp = 0.5)
@@ -632,6 +634,7 @@ infotab$annee_debut <- factor(infotab$annee_debut, levels = c("H2019", "A2019", 
 #Faire en sorte que les données absente soit observer dans les figures
 infotab$annee_debut[is.na(infotab$annee_debut)] <- "NA"
 
+png("figures/figure2.png")
 # faire le violin plot
 par(mfrow=c(1,1), mar=c(8, 4, 4, 3))
 vioplot(centralite ~ annee_debut, data = infotab, col = "#CCE5FF", border= "#99CCFF", xlab= "Session de début", ylab = "Coefficient de centralité", yaxs="i", cex.lab = 1, cex.axis = 0.7)
@@ -639,6 +642,8 @@ vioplot(centralite ~ annee_debut, data = infotab, col = "#CCE5FF", border= "#99C
 points(infotab$annee_debut, infotab$centralite, col = "#3366FF")
 #mettre un titre à la figure
 mtext("Figure 2 : Distribution de la centralité selon la session de début de programme.", side = 1, line = 4, col = "black", font = 2, cex = 0.7, adj = 0, padj = 2)
+# Fermer le fichier PNG
+dev.off()
 
 ##création du barplot de la moyenne de la centrallité selon la formation préalable (figure 3)
 
@@ -654,6 +659,10 @@ sd <- aggregate(infotab$centralite, by = list(infotab$formation_prealable), FUN 
 
 # Definir les couleurs selon les formations préalable
 colors_bar <- colorRampPalette(c("#009966", "#0072B2", "#D55E00", "#CC79A7"))
+
+# Définir le nom et le chemin d'accès du fichier PNG
+png("figures/figure3.png")
+
 # Créer le diagramme en barres avec les moyennes de centralité
 par(mfrow=c(1,1), mar=c(8, 4, 4, 3))
 barplot(height = means$x, names.arg = means$Group.1, col = colors_bar(length(means$x)), xlab = "Formation préalable", ylab = "Moyenne de centralité", ylim= c(0,1))
@@ -662,4 +671,6 @@ arrows(x0=barplot(height = means$x, plot=FALSE), y0=means$x-sd$x, x1=barplot(hei
 #mettre un titre à la figure
 mtext("Figure 3 : Moyenne de centralité par formation préalable.", side = 1, line = 4, col = "black", font = 2, cex = 1, adj = 0, padj = 2)
 
+# Fermer le fichier PNG
+dev.off()
 #essaie
