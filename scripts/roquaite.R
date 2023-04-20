@@ -1,5 +1,6 @@
 roquaite<- function(){
-    #Créer la connection avec le réseau
+  library(RSQLite)
+  #Créer la connection avec le réseau
   con <- dbConnect(SQLite(), dbname="reseau.db")   
   #Requète permettant de compter le nombre de collaboration entre 
   requestinter <- "
@@ -21,4 +22,7 @@ roquaite<- function(){
   resultat<-dbGetQuery(con,sortircol)
   resultat
   listrequete<-list(inter, resultat)
+  
+  rm(con,inter,resultat,requestinter,sortircol)
+  return(listrequete)
 }

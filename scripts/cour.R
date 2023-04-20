@@ -29,6 +29,7 @@ cour <- function(rawdatatarget) {
   courdata_unique1 <- data.frame(lapply(courdata_unique1, function(x) {
     gsub("BIO400", "BOT400", x)
   }))
+  
   courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "BIO109", 1, courdata_unique1$credits)
   courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "BOT400", 1, courdata_unique1$credits)
   courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "ECL515", 2, courdata_unique1$credits)
@@ -62,7 +63,7 @@ cour <- function(rawdatatarget) {
   
   library(RSQLite)
   con <- dbConnect(SQLite(), dbname="reseau.db")
-  dbWriteTable(con, append = TRUE, name = "cours", value = cours, row.names = FALSE)
+  dbWriteTable(con, append = TRUE, name = "cours", value = cour, row.names = FALSE)
   rm(con)
   
   return(cour)

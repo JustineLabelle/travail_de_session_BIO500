@@ -1,0 +1,9 @@
+figures<- function(requete){
+  
+  
+  
+  
+  
+  
+  
+}

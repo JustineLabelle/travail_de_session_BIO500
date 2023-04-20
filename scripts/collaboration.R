@@ -12,7 +12,8 @@ collaboration <- function(rawdatatarget) {
   collaborationdata_unique<-unique(collaborationdata)
   collaborationdata_unique1<-subset(collaborationdata_unique,complete.cases(collaborationdata_unique$etudiant1))
   
-  #Correction fautes de francais collaboration
+  #Correction fautes de francais du tableau collaboration avec la fonction gsub
+  
   collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
     gsub(" ", "%", x)
   }))
@@ -134,11 +135,16 @@ collaboration <- function(rawdatatarget) {
   collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
     gsub("marie_burghin", "marie_bughin", x)
   }))
+  collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
+    gsub("madyson_mcclean", "madyson_mclean", x)
+  }))
   
+  #Enlever les collaborations où un étudiant collabore avec lui même
+  collaborationdata_unique1 <- collaborationdata_unique1[collaborationdata_unique1$etudiant1 != collaborationdata_unique1$etudiant2, ]
   
+  #Vérifier si collaborationdata_unique1 est un dataframe
   class(collaborationdata_unique1)
   
-  library(stringr)
   
   # Écriture de la table filtrée dans un nouveau fichier
   pathcoll<- file.path("data","clean","clean_collaboration.csv")
