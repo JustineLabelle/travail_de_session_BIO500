@@ -1,5 +1,6 @@
 library(targets)
 library(tarchetypes)
+library(RSQLite)
 
 source("scripts/rawdata.R")
 source("scripts/collaboration.R")
@@ -35,23 +36,25 @@ list(
   ),
   tar_target(
     name = clean_courtarget, # Cible pour l'exécution de la figure
-    command = cour(rawdatatarget),
+    command = cour(rawdatatarget)
   ),
   tar_target(
     name = clean_etudianttarget,
-    command = etudiant(rawdatatarget),
+    command = etudiant(rawdatatarget)
   ),
   tar_target(
   name = requete,
-  command = roquaite(),
+  command = roquaite()
   ),
   tar_target(
     name = figure, # Cible pour l'exécution de la figure
-    command = figurer(requete),
+    command = figurer(requete)
   ),
   tar_render(
-    name = rapport,
+    name = jean,
     path ="rapport/rapport.Rmd",
+    # library = rticles,
+    # output_format="rticles::pnas_article"
   ))
 
 

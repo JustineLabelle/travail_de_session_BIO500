@@ -59,13 +59,17 @@ cour <- function(rawdatatarget) {
   pathcour<- file.path("data","clean","clean_cour.csv")
   cour<-read.csv(file= pathcour,sep = ",")
   rm(pathcour)
-  
-  
+
   library(RSQLite)
-  con <- dbConnect(SQLite(), dbname="reseau.db")
-  dbWriteTable(con, append = TRUE, name = "cours", value = cour, row.names = FALSE)
-  rm(con)
   
+  #Créer la connection avec le réseau
+  
+  con <- dbConnect(SQLite(), dbname="reseau.db")   
+  
+  #Écrire la table
+  
+  dbWriteTable(con, append = TRUE, name = "cour", value = cour, row.names = FALSE)
+  rm(con)
   return(cour)
   
 }

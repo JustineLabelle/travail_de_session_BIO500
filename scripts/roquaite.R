@@ -1,7 +1,9 @@
 roquaite<- function(){
-  library(RSQLite)
-  #Créer la connection avec le réseau
-  con <- dbConnect(SQLite(), dbname="reseau.db")   
+  
+  con <- dbConnect(SQLite(), dbname="reseau.db") 
+
+  
+  
   #Requète permettant de compter le nombre de collaboration entre 
   requestinter <- "
   SELECT etudiant1 AS Ami1, etudiant2 AS Ami2, COUNT(*) AS nb_interaction

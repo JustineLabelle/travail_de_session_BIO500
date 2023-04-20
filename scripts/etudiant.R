@@ -156,10 +156,15 @@ etudiant<- function(rawdatatarget) {
   rm(pathe)
   
   library(RSQLite)
-  con <- dbConnect(SQLite(), dbname="reseau.db")
+  
+  #Créer la connection avec le réseau
+  
+  con <- dbConnect(SQLite(), dbname="reseau.db")   
+  
+  #Écrire la table
+   
   dbWriteTable(con, append = TRUE, name = "etudiant", value = etudiant, row.names = FALSE)
   rm(con)
-  
   return(etudiant)
   
   }

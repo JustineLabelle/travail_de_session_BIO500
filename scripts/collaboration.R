@@ -155,12 +155,17 @@ collaboration <- function(rawdatatarget) {
   collaborations<-read.csv(file= pathcoll,sep = ",")
   rm(pathcoll)
   
+  
   library(RSQLite)
-  con <- dbConnect(SQLite(), dbname="reseau.db")
+  
+  #Créer la connection avec le réseau
+  
+  con <- dbConnect(SQLite(), dbname="reseau.db")   
+  
+  #Écrire la table
+  
   dbWriteTable(con, append = TRUE, name = "collaborations", value = collaborations, row.names = FALSE)
   rm(con)
-  
-  
   return(collaborations)
   
   }
