@@ -5,11 +5,12 @@
 # sous-répertoire data/raw
 #-----------------------------------------------------
 
-# Extraire le nom des fichers de chaque groupe
+# Créer une connection avec le réseau sql
 
 library(RSQLite)
 con <- dbConnect(SQLite(), dbname="reseau.db")
 
+#importer les données brute et les mettre dans les fichiers
 allFiles <- dir('data/raw/')
 
 # Tables à fusioner
@@ -24,16 +25,17 @@ for(tab in tabNames) {
   tabFiles <- allFiles[grep(tab, allFiles)]
   
   for(groupe in 1:nbGroupe) {
-    # Definir le nom de l'obj dans lequel sauver les donnees de la table `tab` du groupe `groupe`
+    # Definir le nom de l'objet dans lequel sauver les donnees de la table "tab" du groupe "groupe"
     tabName <- paste0(tab, "data", groupe)
     
-    # Avant  de charger les données, il faut savoir c'est quoi le séparateur utilisé car
-    # il y a eu des données separées par "," et des autres separes par ";"
+    # Avant  de charger les données, il faut savoir c'est quoi le séparateur utilisé car il y a eu des données separées par "," et des autres separes par ";"
     ficher <- paste0('data/raw/', tabFiles[groupe])
-    L <- readLines(ficher, n = 1) # charger première ligne du donnée
-    separateur <- ifelse(grepl(';', L), ';', ',') # S'il y a un ";", separateur est donc ";"
+    # charger première ligne du donnée
+    L <- readLines(ficher, n = 1) 
+    # S'il y a un ";", separateur est donc ";"
+    separateur <- ifelse(grepl(';', L), ';', ',')
     
-    # charger le donnée avec le bon séparateur et donner le nom `tabName`
+    # charger le donnée avec le bon séparateur et donner le nom tabNamet
     assign(tabName, read.csv(ficher, sep = separateur, stringsAsFactors = FALSE, na.strings=c(""," ","NA")))
     
   }
@@ -47,11 +49,12 @@ rm(list = c('allFiles', 'tab', 'tabFiles', 'tabName', 'ficher', 'groupe'))
 # 2. On nettoye collaborations en premier
 
 
-#Utiliser subset pour selectionner seulememnt les colonnes interessante
+#Utiliser subset pour selectionner seulememnt les colonnes interessantes
 
 collaborationdata7 <- subset(collaborationdata7,select = c("etudiant1","etudiant2","sigle","session"))
 
 #on unie les tableaux
+
 collaborationdata<- rbind(collaborationdata1,collaborationdata2,collaborationdata3,collaborationdata4,collaborationdata5,collaborationdata6,collaborationdata7,collaborationdata8,collaborationdata9,collaborationdata10)
 
 #pour enlever les lignes doublons
@@ -59,7 +62,8 @@ collaborationdata<- rbind(collaborationdata1,collaborationdata2,collaborationdat
 collaborationdata_unique<-unique(collaborationdata)
 collaborationdata_unique1<-subset(collaborationdata_unique,complete.cases(collaborationdata_unique$etudiant1))
 
-1.#Correction fautes de francais collaboration
+#Correction fautes de francais du tableau collaboration avec la fonction gsub
+
 collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
   gsub(" ", "%", x)
 }))
@@ -185,14 +189,18 @@ collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, functi
   gsub("madyson_mcclean", "madyson_mclean", x)
 }))
 
+#Enlever les collaborations où un étudiant collabore avec lui même
 collaborationdata_unique1 <- collaborationdata_unique1[collaborationdata_unique1$etudiant1 != collaborationdata_unique1$etudiant2, ]
 
+#Vérifier si collaborationdata_unique1 est un dataframe
 class(collaborationdata_unique1)
 
+#charge la librairie stringr
 library(stringr)
 
 # Écriture de la table filtrée dans un nouveau fichier
 pathcoll<- file.path("data","clean","clean_collaboration.csv")
+#mettre collaboration_unique en csv
 write.csv(collaborationdata_unique1, pathcoll, row.names = F,col.names = T)
 
 #-----------------------------------------------------
@@ -210,9 +218,11 @@ etudiantdata9 <- subset(etudiantdata9,select = c("prenom_nom","prenom","nom","re
 etudiantdata7 <- subset(etudiantdata7,select = c("prenom_nom","prenom","nom","region_administrative","regime_coop","formation_prealable","annee_debut","programme"))
 
 #on unie les tableaux
+
 etudiantdata<- rbind(etudiantdata1,etudiantdata2,etudiantdata3,etudiantdata4,etudiantdata5,etudiantdata6,etudiantdata7,etudiantdata8,etudiantdata9,etudiantdata10)
 
-#on transforme en TRUE et FALSE
+#on transforme en TRUE et FALSE avec gsub
+
 etudiantdata$regime_coop <- gsub("FAUX", "FALSE", etudiantdata$regime_coop)
 etudiantdata$regime_coop <- gsub("VRAI", "TRUE", etudiantdata$regime_coop)
 
@@ -237,9 +247,11 @@ lignes_a_supprimer <- as.integer(ligness_a_supprimer)
 # Suppression des lignes spécifiées
 Students <- etudiant[-lignes_a_supprimer,]
 
+#redonner les bons numéros de ligne selon le nouveau nombre de ligne
 nomrow2<-seq(1,156,1)
 row.names(Students)<-nomrow2
 
+#Correction des différentes lignes du tableau student
 Students[17, ] <- c("kayla_trempe-kay",
                     "kayla",
                     "trempe_kay",
@@ -323,33 +335,36 @@ Students[94, ] <- c("laurianne_plante",
                     NA)
 
 
-##Ajouter des étudiantsqui se rerouve dans le fichier collaboration et pas dans le ficheier etudiant:
-#karim_hamzaoui, eloise_bernier, naomie_morin, gabrielle_moreault,maxence_comyn,maude_viens
+#Ajouter des étudiants qui se rerouvent dans le fichier collaboration et pas dans le ficheier etudiant:
+#karim_hamzaoui, eloise_bernier, naomie_morin, gabrielle_moreault,maxence_comyn, maude_viens
 
 nouvelles_lignes <- data.frame(prenom_nom = c("karim_hamzaoui", "eloise_bernier","naomie_morin", "gabrielle_moreault","maxence_comyn", "maude_viens"), 
                                prenom=c("karim", "eloise","naomie", "gabrielle","maxence", "maude"),
                                nom = c("hamzaoui", "bernier","morin", "moreault","comyn", "viens"),region_administrative=NA,regime_coop=NA,formation_prealable=NA,annee_debut=NA,programme=NA)
 
-
+#rajouter les nouvelles lignes
 Students <- rbind(Students, nouvelles_lignes)
+
+#redonner les bons numéros de ligne selon le nouveau nombre de ligne
 
 nomrow3<-seq(1,162,1)
 row.names(Students)<-nomrow3
 
 # Écriture de la table filtrée dans un nouveau fichier
 pathe<- file.path("data","clean","clean_etudiant.csv")
+#mettre le tableau student en csv
 write.csv(Students,pathe, row.names = F,col.names = T)
 
 #-----------------------------------------------------
 # 3. On nettoye cour ici
 
-#Utiliser subset pour selectionner seulememnt les colonnes interessante
+#Utiliser subset pour selectionner seulememnt les colonnes interessantes
 
 courdata5 <- subset(courdata5,select = c("sigle","optionnel","credits"))
 courdata7 <- subset(courdata7,select = c("sigle","optionnel","credits"))
 
 
-##changer le seul nom de colonne différent des autres pour cours
+#changer le seul nom de colonne différent des autres pour cours
 names(courdata4)[names(courdata4) == "ï..sigle"] <- "sigle"
 
 
@@ -370,6 +385,7 @@ courdata_unique1 <- na.omit(courdata_unique1)
 courdata_unique1 <- data.frame(lapply(courdata_unique1, function(x) {
   gsub("BIO400", "BOT400", x)
 }))
+
 courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "BIO109", 1, courdata_unique1$credits)
 courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "BOT400", 1, courdata_unique1$credits)
 courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "ECL515", 2, courdata_unique1$credits)
@@ -391,8 +407,9 @@ courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ZOO304", TRUE, c
 cour<-unique(courdata_unique1)
 cour_clean<- cour[-36, ]
 
-# Écriture de la table filtrée dans un nouveau fichier
+# Écriture de la table dans un nouveau fichier
 pathcour<- file.path("data","clean","clean_cour.csv")
+#mettre dans un csv
 write.csv(cour_clean, pathcour,row.names = F,col.names = T)
 
 
@@ -414,16 +431,45 @@ collaborations<-read.csv(file= pathcoll,sep = ",")
 #----------------------------------------------------------------------------------------------------------
 ##Requetes SQL
 
+#Créer la connection avec le réseau
 con <- dbConnect(SQLite(), dbname="reseau.db")
 
+#Enlever les tables pour s'assurer que  le réseau est vide et éviter de mettre en double
 dbExecute(con,"DROP TABLE etudiant;")
 dbExecute(con,"DROP TABLE collaborations;")
 dbExecute(con,"DROP TABLE cours;")
 
+#Mettre les CSV dans le réseau
 dbWriteTable(con, append = TRUE, name = "etudiant", value = etudiant, row.names = FALSE)
 dbWriteTable(con, append = TRUE, name = "collaborations", value = collaborations, row.names = FALSE)
 dbWriteTable(con, append = TRUE, name = "cours", value = cours, row.names = FALSE)
 
+
+#-----------------------
+#requète utile pour les figure
+
+#Requète permettant de compter le nombre de collaboration entre 
+requestinter <- "
+SELECT etudiant1 AS Ami1, etudiant2 AS Ami2, COUNT(*) AS nb_interaction
+FROM collaborations
+GROUP BY etudiant1, etudiant2
+ORDER BY nb_interaction DESC
+;"
+
+#créer un dataframe avec la requète inter
+inter<- dbGetQuery(con,requestinter)
+inter
+
+#requète sql permettant de sortir les trois colonne d'intéret prenom_nom, formation_préalable et annee_debut
+sortircol<- "SELECT prenom_nom, formation_prealable, annee_debut 
+FROM etudiant
+;"
+
+#créer un dataframe avec la requète sortircol
+resultat<-dbGetQuery(con,sortircol)
+resultat
+
+#-------------------------
 
 
 requestcollab <- "
@@ -436,16 +482,6 @@ ORDER BY nb_collab DESC;"
 collab<- dbGetQuery(con,requestcollab)
 head(collab)
 collab
-
-
-requestinter <- "
-SELECT etudiant1 AS Ami1, etudiant2 AS Ami2, COUNT(*) AS nb_interaction
-FROM collaborations
-GROUP BY etudiant1, etudiant2
-ORDER BY nb_interaction DESC
-;"
-inter<- dbGetQuery(con,requestinter)
-inter
 
 
 
@@ -514,19 +550,17 @@ library(igraph)
 # Créer un objet graph à partir des données de la requête SQL inter
 graph <- graph.data.frame(inter, directed = TRUE)
 
-# Convertir le graph en une matrice d'adjacence
-adj_matrix <- as.matrix(get.adjacency(graph))
+# Convertir le graph en une matrice contenant toutes les différentes intérractions
+matrice <- as.matrix(get.adjacency(graph))
 
-# Convertir la matrice d'adjacence en une matrice binaire potentiellement pas utile
-#binary_matrix <- ifelse(adj_matrix > 0, 1, 0)
 
 # Ajouter les noms des étudiants comme noms de lignes et de colonnes pas certain que c'est utile
 #(binary_matrix) <- rownames(binary_matrix) <- V(graph)$name
-g<-graph.adjacency(adj_matrix)
 
-#Définir l'épaisseur des bords en fonction du nombre d'intéraction entre les noeuds et changer la couleur
+#Créer un objet igraph
+g<-graph.adjacency(matrice)
 
-#install.packages("scales")
+#install.packages scales
 library(scales)
 
 #Définir l'épaisseur des bords en fonction du nombre d'intéraction entre les noeuds et changer la couleur pour noir
@@ -544,10 +578,14 @@ classes <- cut(ec, breaks = c(0, 0.1, 0.25, 0.5, 0.75, 1), labels = c("Class 1",
 
 # Définir une palette de couleurs pour chacune des classes de degré de centralité
 colors_res <- c("#FFCC00", "#FF9900", "#FF6600", "#FF6699", "#CC0000")
+
+#définir les couleurs selon les classes
 node_colors <- colors_res[as.numeric(classes)]
 
 # Définir une taille de noeud pour chacune des classes de degré de centralité
 sizes <- c(2, 3, 4, 5, 6)
+
+#définir les tailles des points selon les classe de centralité
 node_sizes <- sizes[as.numeric(classes)]
 
 # Print le réseau selon les conditions définies
@@ -561,8 +599,10 @@ reseau<-plot(g, edge.arrow.mode = 0,
              vertex.color = node_colors,
              vertex.size = node_sizes)
 
-legend(x = "right", y = "top", legend = c("Classe 1 : Faible centralité", "Classe 2", "Classe 3", "Classe 4", "Classe 5 : Forte centralité"), col = colors_res, pch = 16, cex = sizes, bty = "n",x.intersp = 0.5, y.intersp = 0.5)
 
+#mettre une légende pour les couleurs selon les classes
+legend(x = "right", y = "top", legend = c("Classe 1 : Faible centralité", "Classe 2", "Classe 3", "Classe 4", "Classe 5 : Forte centralité"), col = colors_res, pch = 16, cex = 0.7, bty = "n",x.intersp = 0.5, y.intersp = 0.5)
+#mettre un titre au réseau
 mtext("Figure 1 : Réseau de collaborations des étudiants du cours BIO500 à l'hiver 2023.", side = 1, line = 4, col = "black", font = 2, cex = 0.6, adj = 0, padj = -10)
 
 #Calculer la distance entre les noeuds
@@ -578,24 +618,35 @@ clique_size_counts(g)
 clique_num(g)
 max_cliques(g)
 
-#Création du violon plot de la centralité selon la session de dénut de programme (figure 2)
 
-centrality_df <- data.frame(nom = names(ec), centralite = ec)
+#-------------------------------
+#Création du graphique violon de la centralité selon la session de dénut de programme (figure 2)
 
-infotab <- merge(etudiant, centrality_df, by.x = "prenom_nom", by.y = "nom")
+#Mettre les données de centralités dans un data frame
+donnecentralite <- data.frame(nom = names(ec), centralite = ec)
 
+#combiner le tableau de centralité et le tableau resultat contenant les informations des étudiants 
+infotab <- merge(resultat, donnecentralite, by.x = "prenom_nom", by.y = "nom")
+
+#charger le package vioplot
 library(vioplot)
 
+#definir les classe des années de début 
 infotab$annee_debut <- factor(infotab$annee_debut, levels = c("H2019", "A2019", "H2020", "A2020", "E2021", "A2021", "H2022","A2022", "NA"))
+#Faire en sorte que les données absente soit observer dans les figures
 infotab$annee_debut[is.na(infotab$annee_debut)] <- "NA"
 
+# faire le violin plot
 par(mfrow=c(1,1), mar=c(8, 4, 4, 3))
 vioplot(centralite ~ annee_debut, data = infotab, col = "#CCE5FF", border= "#99CCFF", xlab= "Session de début", ylab = "Coefficient de centralité", yaxs="i", cex.lab = 1, cex.axis = 0.7)
+#mettre les points dans la figure
 points(infotab$annee_debut, infotab$centralite, col = "#3366FF")
+#mettre un titre à la figure
 mtext("Figure 2 : Distribution de la centralité selon la session de début de programme.", side = 1, line = 4, col = "black", font = 2, cex = 0.7, adj = 0, padj = 2)
 
 ##création du barplot de la moyenne de la centrallité selon la formation préalable (figure 3)
 
+# Faire en sorte que le bareplot prennes aussi les NA dans la figure
 infotab$formation_prealable <- factor(infotab$formation_prealable)
 levels(infotab$formation_prealable) <- c(levels(infotab$formation_prealable), "NA")
 infotab$formation_prealable[is.na(infotab$formation_prealable)] <- "NA"
@@ -604,13 +655,15 @@ infotab$formation_prealable[is.na(infotab$formation_prealable)] <- "NA"
 means <- aggregate(infotab$centralite, by = list(infotab$formation_prealable), FUN = mean)
 sd <- aggregate(infotab$centralite, by = list(infotab$formation_prealable), FUN = sd)
 
-# Créer le diagramme en barres avec les moyennes de centralité
 
+# Definir les couleurs selon les formations préalable
 colors_bar <- colorRampPalette(c("#009966", "#0072B2", "#D55E00", "#CC79A7"))
-
+# Créer le diagramme en barres avec les moyennes de centralité
 par(mfrow=c(1,1), mar=c(8, 4, 4, 3))
 barplot(height = means$x, names.arg = means$Group.1, col = colors_bar(length(means$x)), xlab = "Formation préalable", ylab = "Moyenne de centralité", ylim= c(0,1))
+#mettre les bandes d'écart type
 arrows(x0=barplot(height = means$x, plot=FALSE), y0=means$x-sd$x, x1=barplot(height = means$x, plot=FALSE), y1=means$x+sd$x, angle=90, code=3, length=0.1)
+#mettre un titre à la figure
 mtext("Figure 3 : Moyenne de centralité par formation préalable.", side = 1, line = 4, col = "black", font = 2, cex = 1, adj = 0, padj = 2)
 
 #essaie
