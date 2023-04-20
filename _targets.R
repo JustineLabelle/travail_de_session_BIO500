@@ -35,6 +35,10 @@ list(
     command = etudiant(rawdatatarget),
   ))
   #tar_target(
+  #name = requete
+  #command = manipulation(clean_collaborationtarget, clean_etudianttarget)
+  #),
+  #tar_target(
     #name = manip, # Cible pour l'exécution de la figure
    # command = manipulations(clean_collaborationtarget, clean_courtarget, clean_etudianttarget),
   #)
