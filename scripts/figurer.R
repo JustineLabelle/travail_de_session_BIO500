@@ -1,4 +1,4 @@
-#requete<-requete2(nettoyage2(allFiles))
+#Créer une fonction dans laquelle se trouve toutes les informations nécessaires à la création de nos figures
 
 figurer<- function(requete){
   
