@@ -49,7 +49,7 @@ list(
  ),
   tar_render(
     name = test,
-    path ="rapport/test2/test2.Rmd"
+    path ="rapport_final/rapport_final.Rmd"
     #library = rticles,
      #output_format="rticles::pnas_article"
 ))
