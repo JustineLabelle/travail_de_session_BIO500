@@ -1,0 +1,157 @@
+\documentclass[preprint, 3p,
+authoryear]{elsarticle} %review=doublespace preprint=single 5p=2 column
+%%% Begin My package additions %%%%%%%%%%%%%%%%%%%
+
+\usepackage[hyphens]{url}
+
+  \journal{An awesome journal} % Sets Journal name
+
+\usepackage{lineno} % add
+
+\usepackage{graphicx}
+%%%%%%%%%%%%%%%% end my additions to header
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \usepackage{fontspec}
+  \ifxetex
+    \usepackage{xltxtra,xunicode}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\usepackage[]{natbib}
+\bibliographystyle{plainnat}
+
+\usepackage{graphicx}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={},
+            pdftitle={Short Paper},
+            colorlinks=false,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+
+\setcounter{secnumdepth}{0}
+% Pandoc toggle for numbering sections (defaults to be off)
+\setcounter{secnumdepth}{0}
+
+
+% tightlist command for lists without linebreak
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+
+
+
+\begin{document}
+
+
+\begin{frontmatter}
+
+  \title{Short Paper}
+    \author[]{Philippe Bourassa%
+  %
+  }
+   \ead{Philippe.Bourassa4@USherbrooke.ca} 
+    \author[]{Simon Bourgeois%
+  %
+  }
+   \ead{Simon.Bourgeois@USherbrooke.ca} 
+    \author[]{Justine Labelle%
+  %
+  }
+   \ead{Justine.Labelle@USherbrooke.ca} 
+    \author[]{Kayla Trempe-Kay%
+  %
+  }
+   \ead{Kayla.Trempe-Kay@USherbrooke.ca} 
+      \affiliation[]{Université de Sherbrooke, Département de biologie,
+2500 Boulevard de l'Université, Sherbrooke, Québec, J1K 2R1}
+    \cortext[cor1]{Corresponding author}
+  
+  \begin{abstract}
+  This is the abstract.
+
+  It consists of two paragraphs.
+  \end{abstract}
+    \begin{keyword}
+    Réseau écologique \sep Centralité \sep Réseau écologique \sep 
+    Centralité
+  \end{keyword}
+  
+ \end{frontmatter}
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+Les écologistes ont comme pratique l'étude des interactions entre les
+espèces qui peut être traduite et analysée à l'aide de réseaux
+écologiques. Les différentes propriétés de ces réseaux peuvent fournir
+des indications sur l'organisation des processus écologiques, mais aussi
+sur la résilience du réseau face aux changements et aux perturbations
+\citet{delmas2019analysing}. L'étude des réseaux écologique peut se
+faire autant à l'échelle des écosystèmes qu'au niveau des espèces. Dans
+le dernier cas, ils permettent d'observer le rôle et l'importance de
+celles-ci à travers leurs interactions au sein du réseau
+\citet{delmas2019analysing}. Plusieurs facteurs peuvent influencer ces
+interactions tels que l'abondance locale des espèces, leurs traits ainsi
+que les conditions environnementales \citet{delmas2019analysing}. En
+tant qu'écologistes si bien formés par l'Université de Sherbrooke, nous
+avons tenté de déterminer si les propriétés d'un réseau écologique sont
+similaires à ceux d'un réseau d'interactions entre les étudiants du
+cours BIO500 à l'hiver 2023. Au cours de leur parcours universitaire,
+les étudiants ont été confrontés à réaliser de nombreux travaux
+d'équipes qui représentent des collaborations avec différents individus.
+Ces collaborations permettent d'analyser les interactions entre les
+étudiants et les facteurs qui peuvent les influencer. L'objectif est
+donc d'observer l'importance des étudiants au sein du réseau de
+collaboration à l'aide de la centralité, mais aussi de comprendre
+comment l'année du début du baccalauréat et la formation préalable
+influencent cette centralité.
+
+\hypertarget{ruxe9sultats}{%
+\section{Résultats}\label{ruxe9sultats}}
+
+\includegraphics{rapport_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+\textbf{Figure 1} : Réseau de collaborations des étudiants du cours
+BIO500 à l'hiver 2023.
+
+\includegraphics{rapport_files/figure-latex/unnamed-chunk-2-1.pdf}
+\textbf{Figure 2} : Distribution de la centralité selon la session de
+début de programme.
+
+\includegraphics{rapport_files/figure-latex/unnamed-chunk-3-1.pdf}
+\textbf{Figure 3} : Moyenne de centralité par formation préalable.
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+Salut
+
+\renewcommand\refname{References}
+\bibliography{mybibfile.bib}
+
+
+\end{document}
