@@ -1,6 +1,6 @@
 
 #donneclean<- nettoyage2(allFiles)
-requete2<- function(donneclean) {
+requete<- function(donneclean) {
   
   etudiant <- donneclean[[3]]
   collaborations <- donneclean[[1]]
@@ -77,4 +77,4 @@ requete2<- function(donneclean) {
   return(requete)
   
 }
-#requete2(nettoyage2(allFiles))
+#requete(nettoyage2(allFiles))

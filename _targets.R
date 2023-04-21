@@ -2,9 +2,9 @@ library(targets)
 library(tarchetypes)
 library(RSQLite)
 
-source("scripts/nettoyage2.R")
+source("scripts/nettoyage.R")
 
-source("scripts/requete2.R")
+source("scripts/requete.R")
 
 source("scripts/figurer.R")
 
@@ -23,11 +23,11 @@ list(
   
   tar_target(
     name = donneclean, # Cible pour le modèle
-    command = nettoyage2(file_paths) # Exécution de l'analyse
+    command = nettoyage(file_paths) # Exécution de l'analyse
     ),
   tar_target(
     name = roquaite,
-    command = requete2(donneclean)
+    command = requete(donneclean)
   ),
   tar_target(
     name = figure, # Cible pour l'exécution de la figure

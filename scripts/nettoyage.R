@@ -1,6 +1,6 @@
 
 #allFiles<-list.files("./Data/raw")
-nettoyage2 <- function(allFiles) {
+nettoyage <- function(allFiles) {
   
   #allFiles <- dir('path')
   
@@ -400,5 +400,5 @@ nettoyage2 <- function(allFiles) {
 
    return(liste) 
 }
-#nettoyage2(allFiles)
+#nettoyage(allFiles)
 #yo<-nettoyage(allFiles)
