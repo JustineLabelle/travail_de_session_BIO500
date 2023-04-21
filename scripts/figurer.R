@@ -1,3 +1,6 @@
+
+#requete<-requete2(nettoyage2(allFiles))
+
 figurer<- function(requete){
   
   #Chargement des data frames provenant de requete
@@ -47,3 +50,6 @@ figurer<- function(requete){
   listfigure<-list(infotab, ec, g)
   return(listfigure)
 }
+
+#figurer(requete)
+        
