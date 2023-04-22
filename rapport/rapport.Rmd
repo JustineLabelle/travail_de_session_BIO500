@@ -4,25 +4,27 @@ title: La centralité dans les réseaux de collaboration étudiant ; une compara
 author:
   - name: Philippe Bourassa
     email: Philippe.Bourassa4@USherbrooke.ca
+    affiliation: a
   - name: Simon Bourgeois
     email: Simon.Bourgeois@USherbrooke.ca
+    affiliation: a
   - name: Justine Labelle
     email: Justine.Labelle@USherbrooke.ca
+    affiliation: a
   - name: Kayla Trempe-Kay
     email: Kayla.Trempe-Kay@USherbrooke.ca
+    affiliation: a
 
 address:
-  - address: Universite de Sherbrooke, Departement de biologie, 2500 Boulevard de l'Universite, Sherbrooke, Quebec, J1K 2R1
+  - code: a
+    address: Universite de Sherbrooke, Departement de biologie, 2500 Boulevard de l'Universite, Sherbrooke, Quebec, J1K 2R1
   
 abstract: |
-  This is the abstract.
-
-  It consists of two paragraphs.
+  Les propriétés des réseaux écologiques fournissent des indications sur les interactions écologiques et la résilience du réseau face aux changements et aux perturbations. Parmi ces propriétés, la centralité a été utilisée pour comparer les similarités d’un réseau d’interaction entre les étudiants du cours BIO500 et un réseau écologique. Il a été possible d’identifier les étudiants avec les plus grandes centralités et de les associer à des espèces "clés de voûte" et généralistes. De plus, les étudiants qui ne sont pas visés par l’analyse du réseau de collaboration des étudiants du cours ont tendance à avoir une centralité plus faible. Nous avons aussi tenté d’observer l’influence de la session de début de baccalauréat et la formation préalable des étudiants sur la centralité. Toutefois, aucun de ces facteurs ne l’impact de manière significative, entre autres dû à la faible taille d’échantillon.   
 keywords: 
   - Réseau écologique
   - Collaboration
   - Centralité
-  - 
   
 journal: "An awesome journal"
 date: "22 avril 2023"
@@ -50,6 +52,7 @@ Les écologistes ont comme pratique l’étude des interactions entre les espèc
 
 # Résultats
 
+#
 
 ```{r, echo=FALSE, fig.cap="\\label{fig:plot1}Distribution de la centralité selon la session de début de programme des individus du réseau. La taille des nœuds et leur couleur varient selon la centralité des étudiants tel qu’expliqué par la légende. L’épaisseur des connexions entre les nœuds reflètent l’occurrence d’interactions entre deux étudiants. Plus les lignes sont épaisses, plus les étudiants ont collaboré un grand nombre de fois."}
 figure<-tar_read(figure)
@@ -94,7 +97,11 @@ legend(x = "bottomright", legend = c("Centralité < 0.1", "Centralité entre 0.1
   
 ```
 
+#
+
 La Figure \ref{fig:plot1}  représente le réseau de collaborations des individus du cours BIO500 donné à l’hiver 2023 et leurs collègues. On y observe une variation au niveau de l’importance des étudiants grâce au score de centralité. En effet, la taille des nœuds, qui représente chaque étudiant, varie de manière à ce qu’elle augmente plus le score de centralité est haut, soit proche de 1. Les individus de faible centralité sont retrouvés en marge du réseau alors que les individus présentant une forte centralité sont retrouvés plus au centre. On y décèle également plusieurs occurrences d’interactions entre des étudiants. Effectivement, des lignes plus épaisses sont dénotées dans le réseau.
+
+#
 
 ```{r, echo=FALSE, fig.cap="\\label{fig:plot2}Distribution de la centralité selon la session de début de programme des individus du réseau. Les points mauves dans le graphique correspondent au score de centralité de chaque individu.  Le point blanc représente la médiane du groupe et les boites noires correspond à l’intervalle entre les quartiles. La ligne noir plus mince montre l’étendu où 95% des données se situent. Les côtés montrent la distribution des données."}
 library(RSQLite)
@@ -118,9 +125,13 @@ points(infotab$annee_debut, infotab$centralite, col = "#CC79A7")
 
 ```
 
-La figure 2 permet de visualiser l’impact de l’année de début sur la centralité des individus. Les étudiants NA sont les étudiants qui ne sont pas le cours BIO500 à l’hiver 2023 qui ont effectués des travaux d’équipes avec les étudiants du cours lors de leur parcours. Il est a noté que pour les sessions hiver 2019, été 2021, automne 2021, hiver 2022 et automne 2022, on y retrouve seulement un étudiant ayant débuté son parcours. Ces années ne possèdent donc pas un assez grand échantillonnage pour obtenir des résultats significatifs. On observe que les individus ayant commencé à l’automne 2020 possèdent une médiane similaire aux étudiants ayant commencé à l’hiver 2020. Les étudiants de l’automne 2019 possèdent une médiane plus basse que l’automne 2020 et l’hiver 2020. Les étudiants qui ne sont pas dans le cours possèdent aussi une médiane plus faible que l’automne 2020 et l’hiver 2020, mais elle est similaire aux étudiants de l’automne 2019. Par contre, les différences ne sont pas nécessairement significatives étant donné que les intervalles de 95% s’entrecoupent.
+#
 
-```{r, echo=FALSE, fig.cap="\\label{fig:plot2}Moyenne de centralité selon la formation préalable des individus du réseau. Les barres d’erreurs correspondent aux écart-types associés à la moyenne de chaque classe soit : préuniversitaire, technique, universitaire et NA (individus hors cours BIO500 hiver 2023)."}
+La Figure \ref{fig:plot2} permet de visualiser l’impact de l’année de début sur la centralité des individus. Les étudiants NA sont les étudiants qui ne sont pas le cours BIO500 à l’hiver 2023 qui ont effectués des travaux d’équipes avec les étudiants du cours lors de leur parcours. Il est a noté que pour les sessions hiver 2019, été 2021, automne 2021, hiver 2022 et automne 2022, on y retrouve seulement un étudiant ayant débuté son parcours. Ces années ne possèdent donc pas un assez grand échantillonnage pour obtenir des résultats significatifs. On observe que les individus ayant commencé à l’automne 2020 possèdent une médiane similaire aux étudiants ayant commencé à l’hiver 2020. Les étudiants de l’automne 2019 possèdent une médiane plus basse que l’automne 2020 et l’hiver 2020. Les étudiants qui ne sont pas dans le cours possèdent aussi une médiane plus faible que l’automne 2020 et l’hiver 2020, mais elle est similaire aux étudiants de l’automne 2019. Par contre, les différences ne sont pas nécessairement significatives étant donné que les intervalles de 95% s’entrecoupent.
+
+#
+
+```{r, echo=FALSE, fig.cap="\\label{fig:plot3}Moyenne de centralité selon la formation préalable des individus du réseau. Les barres d’erreurs correspondent aux écart-types associés à la moyenne de chaque classe soit : préuniversitaire, technique, universitaire et NA (individus hors cours BIO500 hiver 2023)."}
 
 figure<-tar_read(figure)
 infotab<-figure[[1]]
@@ -150,12 +161,23 @@ arrows(x0=barplot(height = means$x, plot=FALSE), y0=means$x-sd$x, x1=barplot(hei
 
 ```
 
+#
+
+En ce qui concerne la Figure \ref{fig:plot3} elle illustre la moyenne de centralité retrouvée pour chacune des formations préalables effectués par les étudiants du cours de BIO500 de l’hiver 2023 par rapport aux individus qui ne sont pas dans le cours. On observe très peu de variation par rapport à la formation préalable au niveau des étudiants au sein du cours, mais celle des étudiants hors du cours est très faible. Cependant, les barres d’erreurs se chevauchent ce qui indique que les différences entre les moyennes ne sont pas significatives. 
 
 
 # Discussion
-Salut
+Les propriétés du réseau de collaboration (Figure \ref{fig:plot1}) peuvent être utilisées pour identifier l’importance des individus à l’aide de la centralité. En effet, une grande centralité signifie que les individus ont eu une grande diversité d’interaction, donc des collaborations avec plusieurs personnes différentes. Inversement, les personnes ayant une faible centralité sont celles qui ont eu des interactions très peu diversifiées, donc des collaborations avec les mêmes individus. Cependant, il faut garder en tête que la centralité est influencée par le nombre de collaborations effectué par les étudiants. Par conséquent, il est normal pour les individus hors cours BIO500 à l’hiver 2023 d’avoir une très faible centralité.
+Les individus avec une grande centralité (ceux en rouge au centre du réseau) peuvent être comparés à des espèces "clés de voûte" d’un réseau écologique en raison que leur disparition compromettrait la structure et le fonctionnement d'un écosystème. De plus, cette différence dans la centralité peut aussi être comparée aux individus généraliste et spécialiste d’un réseau écologique. Les individus qui ont une faible centralité seraient considérés des spécialistes, tandis que les individus avec une forte centralité seraient considérés des généralistes. Ainsi, la centralité nous confirme que le réseau de collaboration comporte des propriétés similaires à un réseau écologiste, ce qui répond à notre premier objectif. 
+Contrairement à ce qu’on aurait pu s’attendre, l’année de début n’a pas réellement d’impact sur la centralité (Figure \ref{fig:plot3}). L’automne 2020 représente la majorité des étudiants du cours BIO500, ce qui signifie qu’il s’agit des individus ayant fait la plus diversité d’interactions. Ainsi, on s’attendait à ce qu’il ait une plus grande centralité. Toutefois, les étudiants des autres années ont des centralités similaires aux étudiants de l’automne 2020. Ceci peut être expliqué par un manque de données ou simplement que l’année de début n’influence pas la centralité. Il serait possible de le comparer ces individus à des migrants arrivant dans une nouvelle population et qui finissent par s’intégrer parfaitement à la population les rendant indissociables.
 
-#Conclusion
+
+Comme l’année de début, la formation préalable n’a pas d’impact sur la centralité (Figure \ref{fig:plot3}). Nous pensions que la majorité des étudiants avait suivi une formation préuniversitaire et que ceux de techniques allaient avoir tendance à travailler ensemble donc être des individus spécialistes. Leur petit nombre et leur spécialisation auraient pu diminuer leur centralité ce qui n’est pas le cas. Contrairement à nos attentes, la formation préalable n’influence pas la centralité, puisque les étudiants provenant de technique ont agi comme des généralistes dans notre réseau.
+Il est intéressant de noter que la centralité des étudiants qui sont à l’extérieur du réseau semble être beaucoup plus faible comme il est possible de voir dans les Figures \ref{fig:plot2} et \ref{fig:plot3}. Ce résultat est normal étant donné que ces étudiants ont effectué très peu de collaborations dans le réseau dû au fait qu’ils ne sont pas les individus visés par l’analyse, soit les étudiants du cours de BIO500 à l’hiver 2023.  Ils sont donc moins importants que les étudiants qui sont considérés dans le réseau.
+
+# Conclusion
+
+En conclusion, les étudiants du cours BIO500 à l’hiver 2023 ont un réseau d’interaction similaire à un réseau écologique. En effet, la centralité a permis d’identifier que les individus avec la plus grande centralité agissent comme des espèces "clés de voûte" en plus d’être considérés comme des généralistes. Toutefois, il n’a pas été possible d’observer les facteurs qui influencent la centralité. La formation préalable et l’année de début n’ont pas eu d’effet significatif sur la centralité. Il serait intéressant de venir observer des variables qui pourraient réellement impacter la dynamique de notre réseau et la centralité des individus telles que la participation aux événements sociaux. 
 
 # Remerciement
 
