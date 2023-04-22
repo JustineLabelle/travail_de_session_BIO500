@@ -26,12 +26,12 @@ list(
     command = nettoyage(file_paths) # Exécution de l'analyse
     ),
   tar_target(
-    name = roquaite,
+    name = requeteSQL,
     command = requete(donneclean)
   ),
   tar_target(
     name = figure, # Cible pour l'exécution de la figure
-    command = figurer(roquaite)
+    command = figurer(requeteSQL)
  ),
   tar_render(
     name = rapport, 

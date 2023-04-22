@@ -44,7 +44,7 @@ Les écologistes ont comme pratique l’étude des interactions entre les espèc
 
 ```{r, echo=FALSE}
 figure<-tar_read(figure)
-requete<-tar_read(roquaite)
+requete<-tar_read(requeteSQL)
 
 ec<-figure[[2]]
 g<-figure[[3]]
@@ -144,6 +144,10 @@ arrows(x0=barplot(height = means$x, plot=FALSE), y0=means$x-sd$x, x1=barplot(hei
 
 # Discussion
 Salut
+
+# Remerciement
+
+Nous aimerions prendre le temps de remercier Hugo Morin Brassard et Félix-Olivier Dufour qui nous ont grandement aidé pour enlever un bogue dans notre code
 
 # References {-}
 

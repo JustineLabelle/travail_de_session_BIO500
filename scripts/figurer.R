@@ -1,10 +1,10 @@
 #Créer une fonction dans laquelle se trouve toutes les informations nécessaires à la création de nos figures
 
-figurer<- function(requete){
+figurer<- function(requeteSQL){
   
-  #Chargement des data frames provenant de requete
-  inter<-requete[[1]]
-  resultat<-requete[[2]]
+  #Chargement des data frames provenant de requeteSQL
+  inter<-requeteSQL[[1]]
+  resultat<-requeteSQL[[2]]
   
   ##Créaction des trois figures   
   
@@ -34,5 +34,5 @@ figurer<- function(requete){
   return(listfigure)
 }
 
-#figurer(requete)
+#figurer(requeteSQL)
         
