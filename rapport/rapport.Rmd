@@ -55,13 +55,15 @@ Les écologistes ont comme pratique l’étude des interactions entre les espèc
 #
 
 ```{r, echo=FALSE, fig.cap="\\label{fig:plot1}Distribution de la centralité selon la session de début de programme des individus du réseau. La taille des nœuds et leur couleur varient selon la centralité des étudiants tel qu’expliqué par la légende. L’épaisseur des connexions entre les nœuds reflètent l’occurrence d’interactions entre deux étudiants. Plus les lignes sont épaisses, plus les étudiants ont collaboré un grand nombre de fois."}
+#importer les données des targets
 figure<-tar_read(figure)
 requete<-tar_read(requeteSQL)
-
+#sortir les objets de la source
 ec<-figure[[2]]
 g<-figure[[3]]
 inter<-requete[[1]]
 
+#charger library pour la figure
   library(scales)
   
   #Définir l'épaisseur des bords en fonction du nombre d'intéraction entre les noeuds et changer la couleur pour noir
@@ -82,7 +84,8 @@ inter<-requete[[1]]
 sizes <- c(2, 3, 4, 5, 6)
 node_sizes <- sizes[as.numeric(classes)]
 sizes_legende <- c(0.4,0.6,0.8,1,1.2)
-  
+
+#faire le graphique  
   par(mfrow=c(1,1), mar=c(1.5, 1.5, 1.5, 1.5))
   plot(g, edge.arrow.mode = 0,
                vertex.label = NA, layout = layout.kamada.kawai(g),
@@ -104,6 +107,7 @@ La Figure \ref{fig:plot1}  représente le réseau de collaborations des individu
 #
 
 ```{r, echo=FALSE, fig.cap="\\label{fig:plot2}Distribution de la centralité selon la session de début de programme des individus du réseau. Les points mauves dans le graphique correspondent au score de centralité de chaque individu.  Le point blanc représente la médiane du groupe et les boites noires correspond à l’intervalle entre les quartiles. La ligne noir plus mince montre l’étendu où 95% des données se situent. Les côtés montrent la distribution des données."}
+#importer les données des targets et sortir les objets des listes
 library(RSQLite)
 figure<-tar_read(figure)
 infotab<-figure[[1]]
@@ -132,7 +136,7 @@ La Figure \ref{fig:plot2} permet de visualiser l’impact de l’année de débu
 #
 
 ```{r, echo=FALSE, fig.cap="\\label{fig:plot3}Moyenne de centralité selon la formation préalable des individus du réseau. Les barres d’erreurs correspondent aux écart-types associés à la moyenne de chaque classe soit : préuniversitaire, technique, universitaire et NA (individus hors cours BIO500 hiver 2023)."}
-
+#importer les données des targets et sortir l'objet de la liste
 figure<-tar_read(figure)
 infotab<-figure[[1]]
 
