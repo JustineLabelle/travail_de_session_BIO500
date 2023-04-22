@@ -48,7 +48,7 @@ Les écologistes ont comme pratique l’étude des interactions entre les espèc
  Une fois la compilation des données réalisée par chaque équipe, les données ont été partagées à l’ensemble du groupe et celles-ci ont été fusionnées à l’aide du logiciel R sous forme de trois fichiers csv. Par la suite, les données des différents fichiers ont été nettoyées et standardisées afin d’obtenir une conformité au sein des différentes tables. Ces données ont ensuite été injectées à l’aide du logiciel R dans le système de gestion de données SQLite3 [@muller_rsqlite_2023]. Ce système nous a permis d’extraire les données d’intérêt via des requêtes qui sont nécessaires à la création des figures. Il est à noter que ce n’est pas toutes les données qui ont été utilisées lors des analyses. Les représentations visuelles du réseau d’interaction, ainsi que la centralité ont été effectuées grâce au package "Igraph", ainsi qu’à l’aide du package " Scales " du locigiel R [@csardi_igraph_2023;@wickham_scales_2022]. Le package "Vioplot" du locigiel R a aussi été utilisé pour la création du diagramme en violon [@adler_vioplot_2022]. Ensuite, le package "targets" a été utilisé afin d'automatiser l'ensemble du processus et d'augmenter la reproductibilité de cette étude [@landau_tarchetypes_2023;@landau_targets_2023]. Finalement, le gabarit PNAS dans Rmarkdown a été utilisé grâce au package " Rticles " [@allaire_rticles_2022]. 
 
 # Résultats
-
+.
 
 ```{r, echo=FALSE}
 figure<-tar_read(figure)
