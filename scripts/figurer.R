@@ -20,9 +20,7 @@ figurer<- function(requete){
 
   #Créer un objet igraph
   g<-graph.adjacency(matrice)
-  
-  library(scales)
-  
+
   # Calculer la centralité de degré
   ec <- eigen_centrality(g)$vector
   

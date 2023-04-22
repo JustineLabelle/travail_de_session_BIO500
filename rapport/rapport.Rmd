@@ -50,6 +50,8 @@ ec<-figure[[2]]
 g<-figure[[3]]
 inter<-requete[[1]]
 
+  library(scales)
+  
   #Définir l'épaisseur des bords en fonction du nombre d'intéraction entre les noeuds et changer la couleur pour noir
   edge_colors <- c("black")
   
