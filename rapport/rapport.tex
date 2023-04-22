@@ -44,7 +44,7 @@ authoryear]{elsarticle} %review=doublespace preprint=single 5p=2 column
 \hypersetup{breaklinks=true,
             bookmarks=true,
             pdfauthor={},
-            pdftitle={Short Paper},
+            pdftitle={La centralité dans les réseaux de collaboration étudiant ; une comparaison des similitudes avec les réseaux écologiques},
             colorlinks=false,
             urlcolor=blue,
             linkcolor=magenta,
@@ -69,7 +69,8 @@ authoryear]{elsarticle} %review=doublespace preprint=single 5p=2 column
 
 \begin{frontmatter}
 
-  \title{Short Paper}
+  \title{La centralité dans les réseaux de collaboration étudiant ; une
+comparaison des similitudes avec les réseaux écologiques}
     \author[]{Philippe Bourassa%
   %
   }
@@ -86,8 +87,8 @@ authoryear]{elsarticle} %review=doublespace preprint=single 5p=2 column
   %
   }
    \ead{Kayla.Trempe-Kay@USherbrooke.ca} 
-      \affiliation[]{Université de Sherbrooke, Département de biologie,
-2500 Boulevard de l'Université, Sherbrooke, Québec, J1K 2R1}
+      \affiliation[]{Universite de Sherbrooke, Departement de biologie,
+2500 Boulevard de l'Universite, Sherbrooke, Quebec, J1K 2R1}
     \cortext[cor1]{Corresponding author}
   
   \begin{abstract}
@@ -96,8 +97,8 @@ authoryear]{elsarticle} %review=doublespace preprint=single 5p=2 column
   It consists of two paragraphs.
   \end{abstract}
     \begin{keyword}
-    Réseau écologique \sep Centralité \sep Réseau écologique \sep 
-    Centralité
+    Réseau écologique \sep Collaboration \sep Centralité \sep 
+    
   \end{keyword}
   
  \end{frontmatter}
@@ -110,13 +111,13 @@ espèces qui peut être traduite et analysée à l'aide de réseaux
 écologiques. Les différentes propriétés de ces réseaux peuvent fournir
 des indications sur l'organisation des processus écologiques, mais aussi
 sur la résilience du réseau face aux changements et aux perturbations
-\citet{delmas2019analysing}. L'étude des réseaux écologique peut se
+\citep{delmas2019analysing}. L'étude des réseaux écologique peut se
 faire autant à l'échelle des écosystèmes qu'au niveau des espèces. Dans
 le dernier cas, ils permettent d'observer le rôle et l'importance de
 celles-ci à travers leurs interactions au sein du réseau
-\citet{delmas2019analysing}. Plusieurs facteurs peuvent influencer ces
+\citep{delmas2019analysing}. Plusieurs facteurs peuvent influencer ces
 interactions tels que l'abondance locale des espèces, leurs traits ainsi
-que les conditions environnementales \citet{delmas2019analysing}. En
+que les conditions environnementales \citep{delmas2019analysing}. En
 tant qu'écologistes si bien formés par l'Université de Sherbrooke, nous
 avons tenté de déterminer si les propriétés d'un réseau écologique sont
 similaires à ceux d'un réseau d'interactions entre les étudiants du
@@ -130,25 +131,112 @@ collaboration à l'aide de la centralité, mais aussi de comprendre
 comment l'année du début du baccalauréat et la formation préalable
 influencent cette centralité.
 
+\hypertarget{muxe9thode}{%
+\section{Méthode}\label{muxe9thode}}
+
+\hypertarget{uxe9chantillonnage}{%
+\subsection{Échantillonnage}\label{uxe9chantillonnage}}
+
+Durant l'hiver 2023, les étudiants du cours de BIO500 ont été divisés en
+10 équipes de 4 personnes. Chaque équipe a complété trois fichiers csv
+concernant les cours auxquels ils ont réalisé des travaux d'équipes au
+courant de leur baccalauréat. Le premier fichier permet identifier les
+collaborations effectuées, c'est-à-dire les liens d'interactions avec
+leurs différents coéquipiers en fonction du cours. Le deuxième fichier
+représente des informations relatives aux étudiants de l'équipe. Plus
+spécifiquement, leur région administrative, leur participation au régime
+coopératif, leur année de début du baccalauréat, leur formation
+préalable et leur numéro du programme. Puis, le dernier identifie les
+cours dans lesquels des travaux ont été réalisés et d'autres données
+pertinentes.
+
+\hypertarget{traitement-et-analyse-des-donnuxe9es}{%
+\subsection{Traitement et analyse des
+données}\label{traitement-et-analyse-des-donnuxe9es}}
+
+Une fois la compilation des données réalisée par chaque équipe, les
+données ont été partagées à l'ensemble du groupe et celles-ci ont été
+fusionnées à l'aide du logiciel R sous forme de trois fichiers csv. Par
+la suite, les données des différents fichiers ont été nettoyées et
+standardisées afin d'obtenir une conformité au sein des différentes
+tables. Ces données ont ensuite été injectées à l'aide du logiciel R
+dans le système de gestion de données SQLite3
+\citep{muller_rsqlite_2023}. Ce système nous a permis d'extraire les
+données d'intérêt via des requêtes qui sont nécessaires à la création
+des figures. Il est à noter que ce n'est pas toutes les données qui ont
+été utilisées lors des analyses. Les représentations visuelles du réseau
+d'interaction, ainsi que la centralité ont été effectuées grâce au
+package ``Igraph'', ainsi qu'à l'aide du package '' Scales '' du
+locigiel R \citep{csardi_igraph_2023, wickham_scales_2022}. Le package
+``Vioplot'' du locigiel R a aussi été utilisé pour la création du
+diagramme en violon \citep{adler_vioplot_2022}. Ensuite, le package
+``targets'' a été utilisé afin d'automatiser l'ensemble du processus et
+d'augmenter la reproductibilité de cette étude
+\citep{landau_tarchetypes_2023, landau_targets_2023}. Finalement, le
+gabarit PNAS dans Rmarkdown a été utilisé grâce au package '' Rticles ''
+\citep{allaire_rticles_2022}.
+
 \hypertarget{ruxe9sultats}{%
 \section{Résultats}\label{ruxe9sultats}}
 
+\begin{figure}
+\centering
 \includegraphics{rapport_files/figure-latex/unnamed-chunk-1-1.pdf}
+\caption{\label{fig:plot1}Distribution de la centralité selon la session
+de début de programme des individus du réseau. La taille des nœuds et
+leur couleur varient selon la centralité des étudiants tel qu'expliqué
+par la légende. L'épaisseur des connexions entre les nœuds reflètent
+l'occurrence d'interactions entre deux étudiants. Plus les lignes sont
+épaisses, plus les étudiants ont collaboré un grand nombre de fois.}
+\end{figure}
 
-\textbf{Figure 1} : Réseau de collaborations des étudiants du cours
-BIO500 à l'hiver 2023.
+La Figure \ref{fig:plot1} représente le réseau de collaborations des
+individus du cours BIO500 donné à l'hiver 2023 et leurs collègues. On y
+observe une variation au niveau de l'importance des étudiants grâce au
+score de centralité. En effet, la taille des nœuds, qui représente
+chaque étudiant, varie de manière à ce qu'elle augmente plus le score de
+centralité est haut, soit proche de 1. Les individus de faible
+centralité sont retrouvés en marge du réseau alors que les individus
+présentant une forte centralité sont retrouvés plus au centre. On y
+décèle également plusieurs occurrences d'interactions entre des
+étudiants. Effectivement, des lignes plus épaisses sont dénotées dans le
+réseau.
 
+\begin{figure}
+\centering
 \includegraphics{rapport_files/figure-latex/unnamed-chunk-2-1.pdf}
-\textbf{Figure 2} : Distribution de la centralité selon la session de
-début de programme.
+\caption{\label{fig:plot2}Distribution de la centralité selon la session
+de début de programme des individus du réseau. Les points mauves dans le
+graphique correspondent au score de centralité de chaque individu. Le
+point blanc représente la médiane du groupe et les boites noires
+correspond à l'intervalle entre les quartiles. La ligne noir plus mince
+montre l'étendu où 95\% des données se situent. Les côtés montrent la
+distribution des données.}
+\end{figure}
 
+\begin{figure}
+\centering
 \includegraphics{rapport_files/figure-latex/unnamed-chunk-3-1.pdf}
-\textbf{Figure 3} : Moyenne de centralité par formation préalable.
+\caption{\label{fig:plot2}Moyenne de centralité selon la formation
+préalable des individus du réseau. Les barres d'erreurs correspondent
+aux écart-types associés à la moyenne de chaque classe soit :
+préuniversitaire, technique, universitaire et NA (individus hors cours
+BIO500 hiver 2023).}
+\end{figure}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
 Salut
+
+\#Conclusion
+
+\hypertarget{remerciement}{%
+\section{Remerciement}\label{remerciement}}
+
+Nous aimerions prendre le temps de remercier Hugo Morin Brassard et
+Félix-Olivier Dufour qui nous ont grandement aidé lors de nos nombreuses
+difficultés rencontrées principalement celles dans notre code R.
 
 \renewcommand\refname{References}
 \bibliography{mybibfile.bib}

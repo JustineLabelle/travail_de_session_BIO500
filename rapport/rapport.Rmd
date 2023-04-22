@@ -1,5 +1,6 @@
 ---
-title: Short Paper
+title: La centralité dans les réseaux de collaboration étudiant ; une comparaison des similitudes avec les réseaux écologiques
+
 author:
   - name: Philippe Bourassa
     email: Philippe.Bourassa4@USherbrooke.ca
@@ -11,7 +12,7 @@ author:
     email: Kayla.Trempe-Kay@USherbrooke.ca
 
 address:
-  - address: Université de Sherbrooke, Département de biologie, 2500 Boulevard de l'Université, Sherbrooke, Québec, J1K 2R1
+  - address: Universite de Sherbrooke, Departement de biologie, 2500 Boulevard de l'Universite, Sherbrooke, Quebec, J1K 2R1
   
 abstract: |
   This is the abstract.
@@ -19,12 +20,12 @@ abstract: |
   It consists of two paragraphs.
 keywords: 
   - Réseau écologique
+  - Collaboration
   - Centralité
-  - Interaction
   - 
   
 journal: "An awesome journal"
-date: "`r Sys.Date()`"
+date: "22 avril 2023"
 classoption: preprint, 3p, authoryear
 bibliography: mybibfile.bib
 linenumbers: false
@@ -48,9 +49,9 @@ Les écologistes ont comme pratique l’étude des interactions entre les espèc
  Une fois la compilation des données réalisée par chaque équipe, les données ont été partagées à l’ensemble du groupe et celles-ci ont été fusionnées à l’aide du logiciel R sous forme de trois fichiers csv. Par la suite, les données des différents fichiers ont été nettoyées et standardisées afin d’obtenir une conformité au sein des différentes tables. Ces données ont ensuite été injectées à l’aide du logiciel R dans le système de gestion de données SQLite3 [@muller_rsqlite_2023]. Ce système nous a permis d’extraire les données d’intérêt via des requêtes qui sont nécessaires à la création des figures. Il est à noter que ce n’est pas toutes les données qui ont été utilisées lors des analyses. Les représentations visuelles du réseau d’interaction, ainsi que la centralité ont été effectuées grâce au package "Igraph", ainsi qu’à l’aide du package " Scales " du locigiel R [@csardi_igraph_2023;@wickham_scales_2022]. Le package "Vioplot" du locigiel R a aussi été utilisé pour la création du diagramme en violon [@adler_vioplot_2022]. Ensuite, le package "targets" a été utilisé afin d'automatiser l'ensemble du processus et d'augmenter la reproductibilité de cette étude [@landau_tarchetypes_2023;@landau_targets_2023]. Finalement, le gabarit PNAS dans Rmarkdown a été utilisé grâce au package " Rticles " [@allaire_rticles_2022]. 
 
 # Résultats
-.
 
-```{r, echo=FALSE}
+
+```{r, echo=FALSE, fig.cap="\\label{fig:plot1}Distribution de la centralité selon la session de début de programme des individus du réseau. La taille des nœuds et leur couleur varient selon la centralité des étudiants tel qu’expliqué par la légende. L’épaisseur des connexions entre les nœuds reflètent l’occurrence d’interactions entre deux étudiants. Plus les lignes sont épaisses, plus les étudiants ont collaboré un grand nombre de fois."}
 figure<-tar_read(figure)
 requete<-tar_read(requeteSQL)
 
@@ -93,10 +94,9 @@ legend(x = "bottomright", legend = c("Centralité < 0.1", "Centralité entre 0.1
   
 ```
 
-**Figure 1** : Réseau de collaborations des étudiants du cours BIO500 à l'hiver 2023.
+La Figure \ref{fig:plot1}  représente le réseau de collaborations des individus du cours BIO500 donné à l’hiver 2023 et leurs collègues. On y observe une variation au niveau de l’importance des étudiants grâce au score de centralité. En effet, la taille des nœuds, qui représente chaque étudiant, varie de manière à ce qu’elle augmente plus le score de centralité est haut, soit proche de 1. Les individus de faible centralité sont retrouvés en marge du réseau alors que les individus présentant une forte centralité sont retrouvés plus au centre. On y décèle également plusieurs occurrences d’interactions entre des étudiants. Effectivement, des lignes plus épaisses sont dénotées dans le réseau.
 
-
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.cap="\\label{fig:plot2}Distribution de la centralité selon la session de début de programme des individus du réseau. Les points mauves dans le graphique correspondent au score de centralité de chaque individu.  Le point blanc représente la médiane du groupe et les boites noires correspond à l’intervalle entre les quartiles. La ligne noir plus mince montre l’étendu où 95% des données se situent. Les côtés montrent la distribution des données."}
 library(RSQLite)
 figure<-tar_read(figure)
 infotab<-figure[[1]]
@@ -117,9 +117,10 @@ points(infotab$annee_debut, infotab$centralite, col = "#CC79A7")
 
 
 ```
-**Figure 2** : Distribution de la centralité selon la session de début de programme.
 
-```{r, echo=FALSE}
+La figure 2 permet de visualiser l’impact de l’année de début sur la centralité des individus. Les étudiants NA sont les étudiants qui ne sont pas le cours BIO500 à l’hiver 2023 qui ont effectués des travaux d’équipes avec les étudiants du cours lors de leur parcours. Il est a noté que pour les sessions hiver 2019, été 2021, automne 2021, hiver 2022 et automne 2022, on y retrouve seulement un étudiant ayant débuté son parcours. Ces années ne possèdent donc pas un assez grand échantillonnage pour obtenir des résultats significatifs. On observe que les individus ayant commencé à l’automne 2020 possèdent une médiane similaire aux étudiants ayant commencé à l’hiver 2020. Les étudiants de l’automne 2019 possèdent une médiane plus basse que l’automne 2020 et l’hiver 2020. Les étudiants qui ne sont pas dans le cours possèdent aussi une médiane plus faible que l’automne 2020 et l’hiver 2020, mais elle est similaire aux étudiants de l’automne 2019. Par contre, les différences ne sont pas nécessairement significatives étant donné que les intervalles de 95% s’entrecoupent.
+
+```{r, echo=FALSE, fig.cap="\\label{fig:plot2}Moyenne de centralité selon la formation préalable des individus du réseau. Les barres d’erreurs correspondent aux écart-types associés à la moyenne de chaque classe soit : préuniversitaire, technique, universitaire et NA (individus hors cours BIO500 hiver 2023)."}
 
 figure<-tar_read(figure)
 infotab<-figure[[1]]
@@ -148,7 +149,8 @@ barplot(height = means$x, names.arg = means$Group.1, col = colors_bar(length(mea
 arrows(x0=barplot(height = means$x, plot=FALSE), y0=means$x-sd$x, x1=barplot(height = means$x, plot=FALSE), y1=means$x+sd$x, angle=90, code=3, length=0.1)
 
 ```
-**Figure 3** : Moyenne de centralité par formation préalable.
+
+
 
 # Discussion
 Salut
