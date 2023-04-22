@@ -30,9 +30,10 @@ figurer<- function(requeteSQL){
   #combiner le tableau de centralité et le tableau resultat contenant les informations des étudiants 
   infotab <- merge(resultat, donnecentralite, by.x = "prenom_nom", by.y = "nom")
   
+  # créer une liste contenant les informations pertinantes pour les figures
   listfigure<-list(infotab, ec, g)
   return(listfigure)
 }
 
-#figurer(requeteSQL)
+
         
