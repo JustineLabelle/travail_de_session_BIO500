@@ -1,11 +1,12 @@
 
-#allFiles<-list.files("./Data/raw")
+#fonction qui nettoye les données
+
 nettoyage <- function(allFiles) {
   
   #allFiles <- dir('path')
   
   # Tables à fusioner
-  tabNames <- c('collaboration', 'cour', 'etudiant')
+  tabNames <- c('collaboration', 'cours', 'etudiant')
   
   # Nombre de groupes
   nbGroupe <- length(grep(tabNames[1], allFiles))
@@ -78,7 +79,7 @@ nettoyage <- function(allFiles) {
     gsub("justine_lebelle", "justine_labelle", x)
   }))
   collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
-    gsub("laurie_anne_cournoyer", "laurie-anne_cournoyer", x)
+    gsub("laurie_anne_coursnoyer", "laurie-anne_coursnoyer", x)
   }))
   
   collaborationdata_unique1 <- data.frame(lapply(collaborationdata_unique1, function(x) {
@@ -180,67 +181,67 @@ nettoyage <- function(allFiles) {
   pathcoll<- file.path("data","clean","clean_collaboration.csv")
   write.csv(collaborationdata_unique1, pathcoll, row.names = F)
   
-  
+  #Créer un l'objet collaboration qui sera retourné
   pathcoll<- file.path("data","clean","clean_collaboration.csv")
   collaborations<-read.csv(file= pathcoll,sep = ",")
   collaborations<-unique(collaborations)
+  
   #Utiliser subset pour selectionner seulememnt les colonnes interessante
   
-  courdata5 <- subset(courdata5,select = c("sigle","optionnel","credits"))
-  courdata7 <- subset(courdata7,select = c("sigle","optionnel","credits"))
+  coursdata5 <- subset(coursdata5,select = c("sigle","optionnel","credits"))
+  coursdata7 <- subset(coursdata7,select = c("sigle","optionnel","credits"))
   
   
-  ##changer le seul nom de colonne différent des autres pour cours
-  names(courdata4)[names(courdata4) == "ï..sigle"] <- "sigle"
+  ##changer le seul nom de colonne différent des autres pour courss
+  names(coursdata4)[names(coursdata4) == "ï..sigle"] <- "sigle"
   
   
   #on unie les tableaux
-  courdata<- rbind(courdata1,courdata2,courdata3,courdata4,courdata5,courdata6,courdata7,courdata8,courdata9,courdata10)
+  coursdata<- rbind(coursdata1,coursdata2,coursdata3,coursdata4,coursdata5,coursdata6,coursdata7,coursdata8,coursdata9,coursdata10)
   
   
   #pour enlever les lignes doublons
   
-  courdata_unique<-unique(courdata)
-  courdata_unique1<-subset(courdata_unique,complete.cases(courdata_unique$sigle))
+  coursdata_unique<-unique(coursdata)
+  coursdata_unique1<-subset(coursdata_unique,complete.cases(coursdata_unique$sigle))
   
   
-  # Nettoyage table cours
-  courdata_unique1$optionnel <- gsub("FAUX", "FALSE", courdata_unique1$optionnel)
-  courdata_unique1$optionnel <- gsub("VRAI", "TRUE", courdata_unique1$optionnel)
-  courdata_unique1 <- na.omit(courdata_unique1)
-  courdata_unique1 <- data.frame(lapply(courdata_unique1, function(x) {
+  # Nettoyage table courss
+  coursdata_unique1$optionnel <- gsub("FAUX", "FALSE", coursdata_unique1$optionnel)
+  coursdata_unique1$optionnel <- gsub("VRAI", "TRUE", coursdata_unique1$optionnel)
+  coursdata_unique1 <- na.omit(coursdata_unique1)
+  coursdata_unique1 <- data.frame(lapply(coursdata_unique1, function(x) {
     gsub("BIO400", "BOT400", x)
   }))
+  coursdata_unique1$credits <- ifelse(coursdata_unique1$sigle == "BIO109", 1, coursdata_unique1$credits)
+  coursdata_unique1$credits <- ifelse(coursdata_unique1$sigle == "BOT400", 1, coursdata_unique1$credits)
+  coursdata_unique1$credits <- ifelse(coursdata_unique1$sigle == "ECL515", 2, coursdata_unique1$credits)
+  coursdata_unique1$credits <- ifelse(coursdata_unique1$sigle == "TSB303", 2, coursdata_unique1$credits)
+  coursdata_unique1$optionnel <- ifelse(coursdata_unique1$sigle == "BCM113", FALSE, coursdata_unique1$optionnel)
+  coursdata_unique1$optionnel <- ifelse(coursdata_unique1$sigle == "BIO401", TRUE, coursdata_unique1$optionnel)
+  coursdata_unique1$optionnel <- ifelse(coursdata_unique1$sigle == "ECL215", FALSE, coursdata_unique1$optionnel)
+  coursdata_unique1$optionnel <- ifelse(coursdata_unique1$sigle == "ECL315", TRUE, coursdata_unique1$optionnel) 
+  coursdata_unique1$optionnel <- ifelse(coursdata_unique1$sigle == "ECL406", TRUE, coursdata_unique1$optionnel) 
+  coursdata_unique1$optionnel <- ifelse(coursdata_unique1$sigle == "ECL522", TRUE, coursdata_unique1$optionnel) 
+  coursdata_unique1$optionnel <- ifelse(coursdata_unique1$sigle == "ECL527", FALSE, coursdata_unique1$optionnel)
+  coursdata_unique1$optionnel <- ifelse(coursdata_unique1$sigle == "ECL544", TRUE, coursdata_unique1$optionnel)
+  coursdata_unique1$optionnel <- ifelse(coursdata_unique1$sigle == "ECL610", FALSE, coursdata_unique1$optionnel)
+  coursdata_unique1$optionnel <- ifelse(coursdata_unique1$sigle == "ECL611", FALSE, coursdata_unique1$optionnel)
+  coursdata_unique1$optionnel <- ifelse(coursdata_unique1$sigle == "TSB303", FALSE, coursdata_unique1$optionnel)
+  coursdata_unique1$optionnel <- ifelse(coursdata_unique1$sigle == "ZOO304", TRUE, coursdata_unique1$optionnel)
   
-  courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "BIO109", 1, courdata_unique1$credits)
-  courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "BOT400", 1, courdata_unique1$credits)
-  courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "ECL515", 2, courdata_unique1$credits)
-  courdata_unique1$credits <- ifelse(courdata_unique1$sigle == "TSB303", 2, courdata_unique1$credits)
-  courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "BCM113", FALSE, courdata_unique1$optionnel)
-  courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "BIO401", TRUE, courdata_unique1$optionnel)
-  courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL215", FALSE, courdata_unique1$optionnel)
-  courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL315", TRUE, courdata_unique1$optionnel) 
-  courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL406", TRUE, courdata_unique1$optionnel) 
-  courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL522", TRUE, courdata_unique1$optionnel) 
-  courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL527", FALSE, courdata_unique1$optionnel)
-  courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL544", TRUE, courdata_unique1$optionnel)
-  courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL610", FALSE, courdata_unique1$optionnel)
-  courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ECL611", FALSE, courdata_unique1$optionnel)
-  courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "TSB303", FALSE, courdata_unique1$optionnel)
-  courdata_unique1$optionnel <- ifelse(courdata_unique1$sigle == "ZOO304", TRUE, courdata_unique1$optionnel)
-  
-  
-  cour<-unique(courdata_unique1)
-  cour_clean<- cour[-36, ]
+  #faire en sorte que les lignes sont uniques
+  cours<-unique(coursdata_unique1)
+  cours_clean<- cours[-36, ]
   
   # Écriture de la table filtrée dans un nouveau fichier
-  pathcour<- file.path("data","clean","clean_cour.csv")
-  write.csv(cour_clean, pathcour,row.names = F)
+  pathcours<- file.path("data","clean","clean_cours.csv")
+  write.csv(cours_clean, pathcours,row.names = F)
 
-  
-  pathcour<- file.path("data","clean","clean_cour.csv")
-  cour<-read.csv(file= pathcour,sep = ",")
-  rm(pathcour)
+  #Créer l'objet courss pour le retourner
+  pathcours<- file.path("data","clean","clean_cours.csv")
+  cours<-read.csv(file= pathcours,sep = ",")
+  rm(pathcours)
   
   ##changer le seul nom de colonne différent des autres pour Étudiant
   
@@ -390,15 +391,16 @@ nettoyage <- function(allFiles) {
   pathe<- file.path("data","clean","clean_etudiant.csv")
   write.csv(Students,pathe, row.names = F)
   
-  
+  # créer objet etudiant qui sort à la fin
   pathe<- file.path("data","clean","clean_etudiant.csv")
   etudiant<-read.csv(file= pathe,sep = ",")
+  # nettoyer environnement
   rm(pathe)
-  rm(list = setdiff(ls(), c("collaborations", "cour", "etudiant")))
+  rm(list = setdiff(ls(), c("collaborations", "cours", "etudiant")))
   
-  liste<-list(collaborations, cour, etudiant)
-
+  #liste d'objet à sortir
+  liste<-list(collaborations, cours, etudiant)
+ 
+  #retourner la liste
    return(liste) 
 }
-#nettoyage(allFiles)
-#yo<-nettoyage(allFiles)
